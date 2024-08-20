@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Sales</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="car.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand ms-auto" href="#">CarSales</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li>
+            <div class="filter-section mt-2">
+            <label for="color-filter">Color:</label>
+            <select id="color-filter">
+                <option value="all">All</option>
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+            </select>
+            
+            <label for="brand-filter">Brand:</label>
+            <select id="brand-filter">
+                <option value="all">All</option>
+                <option value="ford">Ford</option>
+                <option value="bmw">BMW</option>
+                <option value="audi">Audi</option>
+            </select>
+        </div>
+    
+        </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Carousel Section -->
+  <section>
+      <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="image/pexels-mikebirdy-170811.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="image/pexels-mikebirdy-1007410.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="image/pexels-alex-amorales-321095-909907.jpg" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section>
+      <div class="container mt-5 mb-5 shadow p-2">
+          <div class="row">
+              <div class="col-md-6">
+                  <img src="image/pexels-kelly-1179532-3065602.jpg" alt="" class="img-fluid w-100 rounded">
+              </div>
+              <div class="col-md-6">
+                  <div class="title text-center">
+                      <h6 class="pb-3">About our company</h6>
+                      <p>We deliver our products at your doorstep with full ease.</p>
+                  </div>
+                  <p class="justify">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Error possimus officia itaque nam accusantium totam esse placeat in modi. Eos totam magni velit quam vero neque temporibus reprehenderit officiis necessitatibus?
+                      Ea cum ab similique nesciunt, laudantium cupiditate quibusdam aspernatur animi debitis facere odio repellendus enim! Quibusdam, officiis iusto culpa, error maiores temporibus libero nemo architecto exercitationem deserunt quaerat adipisci cupiditate!
+                  </p>
+                  <button class="btn btn-lg btn-secondary">Read more</button>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Cards Section -->
+  <div class="container mt-4">
+      <div class="row">
+          <div class="col-md-4">
+              <div class="card" style="width: 18rem;" data-color="blue" data-brand="ford">
+                  <img src="image/pexels-tiwi-riders-1256368688-25819740.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                      <h5 class="card-title">Blue Ford (Trucker)</h5>
+                      <p class="card-text">2024 Model, with Google Maps, bulletproof...</p>
+                      <h6>$350,000</h6>
+                      <a href="#" class="btn btn-primary">Buy Now</a>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="card" style="width: 18rem;" data-color="red" data-brand="audi">
+                  <img src="image/pexels-alexander-pollinger-137430820-10414268.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                      <h5 class="card-title">Red Audi F-s4</h5>
+                      <p class="card-text">Red, 2017 model comes with free 1yr warranty...</p>
+                      <h6>$90,000</h6>
+                      <a href="#" class="btn btn-primary">Buy Now</a>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="card" style="width: 18rem;" data-color="green" data-brand="bmw">
+                  <img src="image/pexels-d30visuals-10833558.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                      <h5 class="card-title">Green BMW</h5>
+                      <p class="card-text">Model 2023, bulletproof, 5 extra spare tyres...</p>
+                      <h6>$156,000</h6>
+                      <a href="#" class="btn btn-primary">Buy Now</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Additional Rows of Cards -->
+      <div class="row mt-4">
+          <div class="col-md-4">
+              <div class="card" style="width: 18rem;" data-color="red" data-brand="ford">
+                  <img src="image/pexels-franco-monsalvo-252430633-16384645.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                      <h5 class="card-title">Red S-905 Ford</h5>
+                      <p class="card-text">2022 Model with coffee makers, glass protector</p>
+                      <h6>$60,000</h6>
+                      <a href="#" class="btn btn-primary">Buy Now</a>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="card" style="width: 18rem;" data-color="green" data-brand="audi">
+                  <img src="image/pexels-ahmed-zaki-173186242-17510822.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                      <h5 class="card-title">Green Audi S3</h5>
+                      <p class="card-text">2024 Model, comes with LED lights, 3D Sound system...</p>
+                      <h6>$50,400</h6>
+                      <a href="#" class="btn btn-primary">Buy Now</a>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="card" style="width: 18rem;" data-color="green" data-brand="ford">
+                  <img src="image/pexels-jmendezrf-15987876.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                      <h5 class="card-title">Metallic Green Ford</h5>
+                      <p class="card-text">2022 Model, Wi-Fi Hotspot, Active Noise Cancellation</p>
+                      <h6>$50,000</h6>
+                      <a href="#" class="btn btn-primary">Buy Now</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="row mt-4">
+          <div class="col-md-4">
+              <div class="card" style="width: 18rem;" data-color="blue" data-brand="bmw">
+                  <img src="image/pexels-tyler-clemmensen-3877370-5762613.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                      <h5 class="card-title">Blue BMW</h5>
+                      <p class="card-text">2019 Model, 7yr warranty, Premium Leather Interior...</p>
+                      <h6>$250,000</h6>
+                      <a href="#" class="btn btn-primary">Buy Now</a>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="card" style="width: 18rem;" data-color="blue" data-brand="audi">
+                  <img src="image/pexels-tyler-clemmensen-3877370-5762613.jpg"class="card-img-top" alt="...">
+                  <div class="card-body">
+                      <h5 class="card-title">Blue Audi G6</h5>
+                      <p class="card-text">2024 Model, 5yrs warranty, sports engine...</p>
+                      <h6>$120,000</h6>
+                      <a href="#" class="btn btn-primary">Buy Now</a>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="card" style="width: 18rem;" data-color="red" data-brand="bmw">
+                  <img src="image/pexels-louis-gys-218031041-11921988.jpg"class="card-img-top" alt="...">
+                  <div class="card-body">
+                      <h5 class="card-title">Red BMW Z4</h5>
+                      <p class="card-text">2020 Model, 5 extra spare tyres, free monthly checkup...</p>
+                      <h6>$200,000</h6>
+                      <a href="#" class="btn btn-primary">Buy Now</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  
+  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('color-filter').addEventListener('change', filterCars);
+    document.getElementById('brand-filter').addEventListener('change', filterCars);
+
+    function filterCars() {
+        const colorFilter = document.getElementById('color-filter').value;
+        const brandFilter = document.getElementById('brand-filter').value;
+
+        const cards = document.querySelectorAll('.card');
+
+        cards.forEach(card => {
+            const color = card.getAttribute('data-color');
+            const brand = card.getAttribute('data-brand');
+
+            let colorMatch = colorFilter === 'all' || colorFilter === color;
+            let brandMatch = brandFilter === 'all' || brandFilter === brand;
+
+            if (colorMatch && brandMatch) {
+                card.parentElement.style.display = 'block'; // Show the card
+            } else {
+                card.parentElement.style.display = 'none'; // Hide the card
+            }
+        });
+    }
+  </script>
+</body>
+</html>
