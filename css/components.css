@@ -1,4 +1,4 @@
-/* VELOCITY — components.css */
+/* Cars NG — components.css */
 /* ============ PRELOADER ============ */
 .preloader{
     position:fixed; inset:0; z-index:9999;
@@ -8,14 +8,15 @@
 }
 .preloader__logo{
     font-family:var(--font-d); font-weight:700; font-size:2rem; letter-spacing:.35em;
-    animation: preGlow 1.6s ease-in-out infinite alternate;
+    color:var(--text); animation: preGlow 1.6s ease-in-out infinite alternate;
 }
+.preloader__logo em{ font-style:normal; color:var(--accent); }
 @keyframes preGlow{
-    from{ text-shadow:0 0 12px rgba(56,240,255,.2); opacity:.75; }
-    to{ text-shadow:0 0 34px rgba(56,240,255,.9); opacity:1; }
+    from{ opacity:.6; }
+    to{ opacity:1; }
 }
 .preloader__bar{
-    width:200px; height:2px; background:rgba(255,255,255,.1); border-radius:4px; overflow:hidden;
+    width:200px; height:3px; background:var(--line-2); border-radius:4px; overflow:hidden;
 }
 .preloader__bar span{
     display:block; height:100%; width:40%;
@@ -33,11 +34,10 @@
 .cursor-dot,.cursor-ring{
     position:fixed; top:0; left:0; pointer-events:none; z-index:9998;
     border-radius:50%; transform:translate(-50%,-50%);
-    mix-blend-mode:difference;
 }
-.cursor-dot{ width:8px; height:8px; background:#fff; }
+.cursor-dot{ width:8px; height:8px; background:var(--accent); }
 .cursor-ring{
-    width:38px; height:38px; border:1.5px solid rgba(255,255,255,.7);
+    width:38px; height:38px; border:1.5px solid rgba(24,34,48,.3);
     transition:width .3s var(--ease-out), height .3s var(--ease-out), border-color .3s;
 }
 .cursor-ring.is-active{ width:64px; height:64px; border-color:var(--accent); }
@@ -52,16 +52,15 @@
 /* ============ NAVBAR ============ */
 .navbar-custom{
     padding:.9rem 0;
-    background:rgba(5,6,11,.55);
-    backdrop-filter:blur(18px) saturate(140%);
-    -webkit-backdrop-filter:blur(18px) saturate(140%);
-    border-bottom:1px solid transparent;
-    transition:background .4s, border-color .4s, padding .4s;
+    background:#ffffff;
+    border-bottom:1px solid var(--line);
+    transition:box-shadow .4s, border-color .4s, padding .4s;
     z-index:1000;
 }
 .navbar-custom.scrolled{
-    background:rgba(5,6,11,.82);
-    border-bottom-color:var(--line);
+    background:#fff;
+    border-bottom-color:var(--line-2);
+    box-shadow:0 18px 45px -30px rgba(24,34,48,.3);
     padding:.45rem 0;
 }
 .navbar-brand{
@@ -97,11 +96,13 @@
 }
 .nav-link-anim:hover::after,.nav-link-anim.active::after{ transform:scaleX(1); transform-origin:left; }
 
+.navbar-toggle-button{ display:none; align-items:center; gap:.6rem;
+    border:1px solid var(--line-2); background:#fff; border-radius:10px; padding:.5rem .75rem; }
 .navbar-toggler{
-    background:none; border:1px solid var(--line-2); border-radius:10px;
+    background:none; border:0; padding:0;
 }
 .navbar-toggler-icon{
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-linecap='round' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='%23182230' stroke-linecap='round' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
 .filter-group{ display:flex; gap:.9rem; align-items:flex-end; flex-wrap:wrap; }
@@ -110,35 +111,35 @@
     font-size:.62rem; letter-spacing:.25em; text-transform:uppercase; color:var(--muted);
 }
 .filter-field select{
-    appearance:none; background:var(--bg-2); color:var(--text);
+    appearance:none; background:#fff; color:var(--text);
     border:1px solid var(--line-2); border-radius:10px;
     padding:.45rem 2rem .45rem .9rem; font-size:.88rem;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%238b93a7' stroke-width='2'/%3E%3C/svg%3E");
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%235d6675' stroke-width='2'/%3E%3C/svg%3E");
     background-repeat:no-repeat; background-position:right .75rem center;
     cursor:pointer; transition:border-color .3s;
 }
 .filter-field select:focus{ outline:none; border-color:var(--accent); }
-.filter-field option{ background:var(--bg-2); color:var(--text); }
+.filter-field option{ background:#fff; color:var(--text); }
 
 /* ============ BACK TO TOP ============ */
 .to-top{
     position:fixed; right:20px; bottom:20px; z-index:900;
     width:46px; height:46px; border-radius:14px;
-    border:1px solid var(--line-2); background:rgba(8,10,16,.7);
+    border:1px solid var(--line-2); background:#fff;
     color:var(--text); font-size:1.1rem; cursor:pointer;
-    backdrop-filter:blur(10px);
+    box-shadow:var(--shadow);
     opacity:0; visibility:hidden; transform:translateY(14px);
     transition:all .4s var(--ease-out);
 }
 .to-top.shown{ opacity:1; visibility:visible; transform:none; }
-.to-top:hover{ background:var(--grad); border-color:transparent; color:#fff;
-    box-shadow:0 10px 30px -8px rgba(56,240,255,.5); }
+.to-top:hover{ background:var(--accent); border-color:transparent; color:#fff;
+    box-shadow:0 16px 34px -12px rgba(255,107,0,.55); }
 @media (max-width:576px){ .to-top{ right:12px; bottom:12px; } }
 
 /* ============ ACCESSIBILITY ============ */
 .skip-link{
     position:fixed; top:-80px; left:16px; z-index:1200;
-    background:var(--grad); color:#fff; font-size:.85rem; font-weight:600;
+    background:var(--accent); color:#fff; font-size:.85rem; font-weight:600;
     padding:.6rem 1.2rem; border-radius:10px;
     transition:top .3s var(--ease-out);
 }
@@ -160,7 +161,7 @@ section[id], header[id]{ scroll-margin-top:110px; }
 }
 .btn-glow:hover{
     background-position:100% 0; color:#fff; transform:translateY(-2px);
-    box-shadow:0 12px 40px -8px rgba(56,240,255,.55);
+    box-shadow:0 14px 40px -10px rgba(255,107,0,.5);
 }
 .btn-glow--lg{ padding:1rem 2.2rem; font-size:1rem; }
 .btn-glow::after{
