@@ -23,7 +23,7 @@
 
 *{ box-sizing:border-box; }
 
-html{ scroll-behavior:smooth; }
+html{ scroll-behavior:smooth; color-scheme:light; -webkit-tap-highlight-color:transparent; }
 
 body{
     background: var(--bg);
@@ -43,6 +43,7 @@ html{ scrollbar-width:thin; scrollbar-color:#ff8a3d #fffdfa; }
 
 img{ user-select:none; }
 a{ text-decoration:none; }
+button{ font-family:inherit; }
 
 .grad-text{
     background: var(--grad);
