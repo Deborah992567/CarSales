@@ -120,6 +120,21 @@
 .filter-field select:focus{ outline:none; border-color:var(--accent); }
 .filter-field option{ background:var(--bg-2); color:var(--text); }
 
+/* ============ BACK TO TOP ============ */
+.to-top{
+    position:fixed; right:20px; bottom:20px; z-index:900;
+    width:46px; height:46px; border-radius:14px;
+    border:1px solid var(--line-2); background:rgba(8,10,16,.7);
+    color:var(--text); font-size:1.1rem; cursor:pointer;
+    backdrop-filter:blur(10px);
+    opacity:0; visibility:hidden; transform:translateY(14px);
+    transition:all .4s var(--ease-out);
+}
+.to-top.shown{ opacity:1; visibility:visible; transform:none; }
+.to-top:hover{ background:var(--grad); border-color:transparent; color:#fff;
+    box-shadow:0 10px 30px -8px rgba(56,240,255,.5); }
+@media (max-width:576px){ .to-top{ right:12px; bottom:12px; } }
+
 /* ============ ACCESSIBILITY ============ */
 .skip-link{
     position:fixed; top:-80px; left:16px; z-index:1200;

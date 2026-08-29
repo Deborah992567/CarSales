@@ -25,4 +25,13 @@
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+
+    /* Back-to-top */
+    const toTop = document.getElementById('toTop');
+    if (toTop) {
+        const toggle = () => toTop.classList.toggle('shown', window.scrollY > 600);
+        window.addEventListener('scroll', toggle, { passive: true });
+        toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        toggle();
+    }
 })();
