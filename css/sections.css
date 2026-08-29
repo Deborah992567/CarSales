@@ -85,6 +85,7 @@
 
 /* ============ SECTIONS ============ */
 .section{ padding:7rem 0; }
+.section, .gallery{ content-visibility:auto; contain-intrinsic-size:auto 480px; }
 .section-head{ margin-bottom:3.25rem; }
 .section-head--left{ margin-bottom:2rem; }
 .section-kicker{
