@@ -1,0 +1,22 @@
+/* VELOCITY — reveal.css */
+/* ============ REVEAL (scroll animations) ============ */
+.reveal{
+    opacity:0; transform:translateY(46px);
+    transition:opacity .9s var(--ease-out), transform .9s var(--ease-out);
+    transition-delay:var(--d, 0s);
+}
+.reveal.in{ opacity:1; transform:none; }
+.hero__content .reveal{ animation:none; }
+.hero .line-1{ --d:.1s; }
+.hero .line-2{ --d:.24s; }
+.hero .hero__badge{ --d:0s; }
+.hero .hero__sub{ --d:.4s; }
+.hero .hero__cta{ --d:.55s; }
+.hero .hero__hint{ --d:.7s; }
+.hero .hero__marquee-hero{ --d:.8s; }
+
+@media (prefers-reduced-motion:reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    *,*::before,*::after{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+}
+
