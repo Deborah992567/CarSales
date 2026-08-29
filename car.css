@@ -388,7 +388,8 @@ a{ text-decoration:none; }
     transition:clip-path .7s var(--ease-out), transform .7s var(--ease-out), opacity .35s ease;
     overflow:hidden;
 }
-.car-card:hover .interior-reveal{
+.car-card:hover .interior-reveal,
+.car-card.hover .interior-reveal{
     opacity:1; visibility:visible;
     transform:translateY(0); clip-path:inset(0 0 0 0);
 }

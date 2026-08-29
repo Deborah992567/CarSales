@@ -88,6 +88,17 @@
         });
     }
 
+    /* ---------- mobile: tap a card to preview the interior ---------- */
+    if (window.matchMedia('(hover:none)').matches) {
+        document.addEventListener('click', (e) => {
+            const card = e.target.closest('.car-card');
+            if (!card) return;
+            const open = card.classList.contains('hover');
+            document.querySelectorAll('.car-card.hover').forEach(c => c.classList.remove('hover'));
+            if (!open) card.classList.add('hover');
+        });
+    }
+
     /* ---------- Filters ---------- */
     const colorFilter = document.getElementById('color-filter');
     const brandFilter = document.getElementById('brand-filter');
