@@ -175,3 +175,15 @@
     animation:spin360 8s linear infinite;
 }
 
+
+/* ============ PER-COLOUR TINTS ============ */
+.col-card[data-color="blue"] .car-card{ --tint: 56, 240, 255; }
+.col-card[data-color="blue"] .car-card:hover{
+    border-color: rgba(56,240,255,.45);
+    box-shadow:0 30px 70px -25px rgba(0,0,0,.8), 0 0 0 1px rgba(56,240,255,.14), 0 0 60px -18px rgba(56,240,255,.5);
+}
+.col-card[data-color="blue"] .car-card::before{
+    background:radial-gradient(420px circle at var(--gx,50%) var(--gy,50%), rgba(56,240,255,.16), transparent 45%);
+}
+.col-card[data-color="blue"] .btn-buy::before{ background:linear-gradient(100deg,#0e9ec9,#38f0ff); }
+.col-card[data-color="blue"] .interior-reveal__chip{ border-color:rgba(56,240,255,.6); }
