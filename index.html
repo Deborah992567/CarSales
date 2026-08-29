@@ -736,13 +736,13 @@
                     <form class="contact__form" id="contactForm">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <input type="text" class="form-input" placeholder="Full name" required>
+                                <input type="text" class="form-input" placeholder="Full name" autocomplete="name" required>
                             </div>
                             <div class="col-md-6">
-                                <input type="email" class="form-input" placeholder="Email address" required>
+                                <input type="email" class="form-input" placeholder="Email address" autocomplete="email" inputmode="email" required>
                             </div>
                             <div class="col-12">
-                                <input type="text" class="form-input" placeholder="Dream car (e.g. Green Audi S3)">
+                                <input type="text" class="form-input" placeholder="Dream car (e.g. Green Audi S3)" autocomplete="off">
                             </div>
                             <div class="col-12">
                                 <textarea class="form-input" rows="4" placeholder="Tell us about your test drive…"></textarea>
@@ -793,7 +793,7 @@
                         <h5>Drop of throttle</h5>
                         <p>New arrivals and private viewings, once a month.</p>
                         <form class="news-form" id="newsForm">
-                            <input type="email" class="form-input form-input--sm" placeholder="you@email.com" aria-label="Email for newsletter" required>
+                            <input type="email" class="form-input form-input--sm" placeholder="you@email.com" aria-label="Email for newsletter" autocomplete="email" inputmode="email" required>
                             <button class="btn-icon" type="submit" aria-label="Subscribe">&rarr;</button>
                         </form>
                         <span class="news-ok" id="newsOk">✓ Subscribed</span>
