@@ -1,5 +1,5 @@
 /* ============================================================
-   VELOCITY — showroom cards: 3D tilt, glare, tap-reveal, filters
+   Cars NG — showroom cards: 3D tilt, glare, tap-reveal, filters
    ============================================================ */
 (function () {
     'use strict';

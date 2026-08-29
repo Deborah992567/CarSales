@@ -1,5 +1,5 @@
 /* ============================================================
-   VELOCITY — reservation modal + enquiry form
+   Cars NG — reservation modal + enquiry form
    ============================================================ */
 (function () {
     'use strict';

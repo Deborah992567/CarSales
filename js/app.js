@@ -1,5 +1,5 @@
 /* ============================================================
-   VELOCITY — entry point / loader
+   Cars NG — entry point / loader
    Load order (classic scripts, run at end of body):
      1. ui.js       preloader, scroll progress, navbar state
      2. cursor.js   custom cursor
@@ -9,5 +9,5 @@
    ============================================================ */
 (function () {
     'use strict';
-    if (window.VELOCITY_DEBUG) console.log('[VELOCITY] interactive layer loaded.');
+    if (window.VELOCITY_DEBUG) console.log('[Cars NG] interactive layer loaded.');
 })();

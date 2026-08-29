@@ -1,5 +1,5 @@
 /* ============================================================
-   VELOCITY — scroll reveal choreography, counters, parallax
+   Cars NG — scroll reveal choreography, counters, parallax
    ============================================================ */
 (function () {
     'use strict';

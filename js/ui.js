@@ -1,5 +1,5 @@
 /* ============================================================
-   VELOCITY — UI bootstrap: preloader, progress bar, navbar state
+   Cars NG — UI bootstrap: preloader, progress bar, navbar state
    ============================================================ */
 (function () {
     'use strict';

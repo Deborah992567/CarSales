@@ -1,5 +1,5 @@
 /* ============================================================
-   VELOCITY — Three.js 3D showroom scenes
+   Cars NG — Three.js 3D showroom scenes
    Hero: stylized concept car in a particle stage
    CTA : kinetic energy ring
    ============================================================ */

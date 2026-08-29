@@ -1,5 +1,5 @@
 /* ============================================================
-   VELOCITY — custom cursor (dot + trailing ring)
+   Cars NG — custom cursor (dot + trailing ring)
    ============================================================ */
 (function () {
     'use strict';
