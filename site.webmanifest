@@ -1,11 +1,11 @@
 {
-  "name": "VELOCITY — Premium Performance Car Showroom",
-  "short_name": "VELOCITY",
-  "description": "A cinematic 3D car showroom with interactive hover-reveal interiors.",
+  "name": "Cars NG — Premium Car Marketplace",
+  "short_name": "Cars NG",
+  "description": "Nigeria's premium car marketplace with an immersive 3D showroom and hover-reveal interiors.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#05060b",
-  "theme_color": "#05060b",
+  "background_color": "#fffdfa",
+  "theme_color": "#fffdfa",
   "icons": [
     {
       "src": "favicon.svg",
