@@ -157,7 +157,7 @@
                 <span class="section-kicker">— The Collection</span>
                 <h2 class="section-title">Hover a car.<br><span class="grad-text">Discover its soul.</span></h2>
                 <p class="section-sub">Move your cursor over any vehicle — watch it rotate in 3D and reveal a cinematic interior preview designed for motion.</p>
-                <div class="collection-meta"><span id="filterCount" class="filter-count">9 vehicles in the collection</span></div>
+                <div class="collection-meta"><span id="filterCount" aria-live="polite" class="filter-count">9 vehicles in the collection</span></div>
             </div>
 
             <div class="cars-grid" id="carsGrid">
@@ -522,7 +522,7 @@
                 </div>
             </div>
 
-            <div class="empty-state" id="emptyState">
+            <div class="empty-state" id="emptyState" aria-live="polite">
                 <div class="empty-state__ring">◆</div>
                 <p>No vehicles match that combination.</p>
                 <button class="btn-ghost" id="resetFilters">Reset filters</button>
