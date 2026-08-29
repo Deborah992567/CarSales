@@ -75,7 +75,7 @@
     <div class="preloader" id="preloader">
         <div class="preloader__logo">CARS<em> NG</em></div>
         <div class="preloader__bar"><span></span></div>
-        <div class="preloader__msg">Calibrating showroom…</div>
+        <div class="preloader__msg">Preparing your showroom…</div>
     </div>
 
     <!-- ================= CUSTOM CURSOR ================= -->
@@ -103,7 +103,7 @@
                 <div class="filter-group align-items-lg-center">
                     <div class="filter-field">
                         <label for="color-filter">Colour</label>
-                        <select id="color-filter">
+                        <select id="color-filter" title="Filter vehicles by colour">
                             <option value="all">All</option>
                             <option value="red">Red</option>
                             <option value="blue">Blue</option>
@@ -112,7 +112,7 @@
                     </div>
                     <div class="filter-field">
                         <label for="brand-filter">Brand</label>
-                        <select id="brand-filter">
+                        <select id="brand-filter" title="Filter vehicles by brand">
                             <option value="all">All</option>
                             <option value="ford">Ford</option>
                             <option value="bmw">BMW</option>
@@ -768,7 +768,7 @@
                                 <input type="text" class="form-input" placeholder="Dream car (e.g. Green Audi S3)" autocomplete="off">
                             </div>
                             <div class="col-12">
-                                <textarea class="form-input" rows="4" placeholder="Tell us about your test drive…"></textarea>
+                                <textarea class="form-input" rows="4" placeholder="Tell us about your test drive…" aria-label="Test drive details"></textarea>
                             </div>
                             <div class="col-12">
                                 <button type="submit" class="btn-glow btn-glow--lg"><span>Send request</span></button>
