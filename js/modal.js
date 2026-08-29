@@ -12,13 +12,16 @@
     const modalPrice = document.getElementById('modalPrice');
     const modalConfirm = document.getElementById('modalConfirm');
 
+    let lastTrigger = null;
     const openModal = (btn) => {
         if (!backdrop) return;
+        lastTrigger = btn;
         modalTitle.textContent = btn.dataset.buy;
         modalPrice.textContent = btn.dataset.price.replace('$', '').replace(',', '');
         modalImg.src = btn.dataset.img;
         backdrop.classList.add('open');
         document.body.style.overflow = 'hidden';
+        if (closeBtn) closeBtn.focus();
     };
     document.addEventListener('click', (e) => {
         const buy = e.target.closest('[data-buy]');
@@ -28,6 +31,7 @@
         if (!backdrop) return;
         backdrop.classList.remove('open');
         document.body.style.overflow = '';
+        if (lastTrigger) lastTrigger.focus();
     };
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     if (backdrop) backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeModal(); });
