@@ -54,4 +54,14 @@
         form.reset();
         setTimeout(() => document.getElementById('formOk').classList.remove('show'), 4200);
     });
+
+    /* Newsletter */
+    const news = document.getElementById('newsForm');
+    if (news) news.addEventListener('submit', (e) => {
+        e.preventDefault();
+        news.reset();
+        const ok = document.getElementById('newsOk');
+        if (ok) ok.classList.add('show');
+        setTimeout(() => ok && ok.classList.remove('show'), 4200);
+    });
 })();
