@@ -347,3 +347,11 @@
 .gallery__item:hover .gallery__cap{ transform:translateY(0); }
 @media (max-width:768px){ .gallery{ grid-template-columns:repeat(2,1fr); } }
 @media (max-width:420px){ .gallery{ grid-template-columns:1fr; } }
+
+/* ============ COLLECTION META ============ */
+.collection-meta{ margin-top:.5rem; }
+.filter-count{
+    display:inline-block; font-size:.74rem; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--accent); border:1px solid rgba(56,240,255,.3); border-radius:999px;
+    padding:.35rem .9rem; background:rgba(56,240,255,.06);
+}

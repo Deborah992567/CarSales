@@ -58,6 +58,8 @@
             }
         });
         if (emptyState) emptyState.classList.toggle('empty-state--show', visible === 0);
+        const count = document.getElementById('filterCount');
+        if (count) count.textContent = visible + (visible === 1 ? ' vehicle' : ' vehicles') + ' in the collection';
     }
     if (colorFilter) colorFilter.addEventListener('change', filterCars);
     if (brandFilter) brandFilter.addEventListener('change', filterCars);
