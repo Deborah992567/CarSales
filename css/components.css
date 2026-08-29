@@ -180,3 +180,5 @@ section[id], header[id]{ scroll-margin-top:110px; }
 .btn-ghost .arr{ display:inline-block; animation:arrDrop 1.6s ease-in-out infinite; }
 @keyframes arrDrop{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(4px); } }
 
+.contact a.contact{ color:var(--text); }
+.contact a.contact:hover{ color:var(--accent); }
