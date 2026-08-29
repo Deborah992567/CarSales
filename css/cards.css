@@ -187,3 +187,13 @@
 }
 .col-card[data-color="blue"] .btn-buy::before{ background:linear-gradient(100deg,#0e9ec9,#38f0ff); }
 .col-card[data-color="blue"] .interior-reveal__chip{ border-color:rgba(56,240,255,.6); }
+.col-card[data-color="red"] .car-card{ --tint: 255, 77, 125; }
+.col-card[data-color="red"] .car-card:hover{
+    border-color: rgba(255,77,125,.45);
+    box-shadow:0 30px 70px -25px rgba(0,0,0,.8), 0 0 0 1px rgba(255,77,125,.14), 0 0 60px -18px rgba(255,77,125,.5);
+}
+.col-card[data-color="red"] .car-card::before{
+    background:radial-gradient(420px circle at var(--gx,50%) var(--gy,50%), rgba(255,77,125,.16), transparent 45%);
+}
+.col-card[data-color="red"] .btn-buy::before{ background:linear-gradient(100deg,#c22a51,#ff4d7d); }
+.col-card[data-color="red"] .interior-reveal__chip{ border-color:rgba(255,77,125,.6); }
