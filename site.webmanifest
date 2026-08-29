@@ -1,0 +1,17 @@
+{
+  "name": "VELOCITY — Premium Performance Car Showroom",
+  "short_name": "VELOCITY",
+  "description": "A cinematic 3D car showroom with interactive hover-reveal interiors.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#05060b",
+  "theme_color": "#05060b",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
