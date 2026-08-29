@@ -27,8 +27,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap">
     <link rel="dns-prefetch" href="https://images.pexels.com">
-    <link rel="preload" as="image" href="image/pexels-tiwi-riders-1256368688-25819740.webp">
-    <link rel="preload" as="image" href="image/interior/interior-5.webp">
+    <link rel="preload" as="image" href="image/pexels-tiwi-riders-1256368688-25819740.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="image/interior/interior-5.webp" fetchpriority="high">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="car.css">
@@ -165,7 +165,7 @@
                 <div class="col col-card col-md-6 col-lg-4" data-color="blue" data-brand="ford">
                     <article class="car-card tilt" style="--i:0" data-index="01">
                         <div class="car-card__media">
-                            <img loading="lazy" decoding="async" class="car-card__photo exterior" src="image/pexels-tiwi-riders-1256368688-25819740.webp" alt="Blue Ford Trucker exterior">
+                            <img fetchpriority="high" class="car-card__photo exterior" src="image/pexels-tiwi-riders-1256368688-25819740.webp" alt="Blue Ford Trucker exterior">
                             <div class="interior-reveal">
                                 <img loading="lazy" decoding="async" class="interior-reveal__img" src="image/interior/interior-5.webp" alt="Blue Ford Trucker interior">
                                 <div class="interior-reveal__shade"></div>
