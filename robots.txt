@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://deborah992567.github.io/CarSales/sitemap.xml
