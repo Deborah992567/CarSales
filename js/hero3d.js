@@ -260,8 +260,17 @@ function initHero(canvas) {
     const clock = new THREE.Clock();
     let raf = 0;
 
+    /* pause when the hero scrolls out of view */
+    let active = true;
+    const visIO = new IntersectionObserver(([en]) => {
+        active = en.isIntersecting;
+        if (active && !reduced) tick();
+    });
+    visIO.observe(canvas);
+
     const tick = () => {
         const t = clock.getElapsedTime();
+        if (!active && !reduced) return;
         targetRotY += ((mouse.x * .5) - targetRotY) * .05;
         targetTilt += ((-mouse.y * .28) - targetTilt) * .05;
 
@@ -285,7 +294,7 @@ function initHero(canvas) {
         camera.lookAt(0, .5, 0);
 
         renderer.render(scene, camera);
-        if (!reduced) raf = requestAnimationFrame(tick);
+        if (!reduced && active) raf = requestAnimationFrame(tick);
     };
     tick();
 
@@ -293,6 +302,7 @@ function initHero(canvas) {
         dispose: () => {
             cancelAnimationFrame(raf);
             window.removeEventListener('resize', onResize);
+            visIO.disconnect();
             renderer.dispose();
         }
     };
@@ -346,9 +356,16 @@ function initCTA(canvas) {
     group.add(cp);
 
     let raf = 0;
+    let active = true;
+    const visIO = new IntersectionObserver(([en]) => {
+        active = en.isIntersecting;
+        if (active && !reduced) tick();
+    });
+    visIO.observe(canvas);
     const clock = new THREE.Clock();
     const tick = () => {
         const t = clock.getElapsedTime();
+        if (!active && !reduced) return;
         rings.forEach((m, i) => {
             m.rotation.z = t * (.35 + i * .15) * (i % 2 ? 1 : -1);
             m.rotation.x = Math.PI / 2.2 + i * .35 + Math.sin(t * .4 + i) * .12;
@@ -356,7 +373,7 @@ function initCTA(canvas) {
         cp.rotation.y = t * .12;
         group.rotation.y = Math.sin(t * .3) * .3;
         renderer.render(scene, camera);
-        if (!reduced) raf = requestAnimationFrame(tick);
+        if (!reduced && active) raf = requestAnimationFrame(tick);
     };
     tick();
 
@@ -374,6 +391,7 @@ function initCTA(canvas) {
         dispose: () => {
             cancelAnimationFrame(raf);
             window.removeEventListener('resize', onResize);
+            visIO.disconnect();
             renderer.dispose();
         }
     };
