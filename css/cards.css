@@ -1,4 +1,4 @@
-/* VELOCITY — cards.css */
+/* Cars NG — cards.css */
 /* ============ CAR CARDS / SHOWROOM ============ */
 .cars-grid{ display:flex; flex-wrap:wrap; margin:-.75rem; }
 .col-card{ padding:.75rem; }
@@ -15,10 +15,10 @@
 .car-card::before{
     content:''; position:absolute; inset:0; z-index:5; pointer-events:none;
     opacity:0; transition:opacity .5s;
-    background:radial-gradient(420px circle at var(--gx,50%) var(--gy,50%), rgba(56,240,255,.12), transparent 45%);
+    background:radial-gradient(420px circle at var(--gx,50%) var(--gy,50%), rgba(255,107,0,.1), transparent 45%);
     border-radius:var(--radius);
 }
-.car-card:hover::before{ opacity:1; border:1px solid rgba(56,240,255,.4); }
+.car-card:hover::before{ opacity:1; border:1px solid rgba(255,107,0,.35); }
 
 .car-card__media{
     position:relative; height:218px; overflow:hidden; background:var(--bg-2);
@@ -31,15 +31,15 @@
 
 .car-card__num{
     position:absolute; top:12px; right:16px; z-index:4;
-    font-family:var(--font-d); font-size:1.05rem; font-weight:700; color:rgba(255,255,255,.85);
-    text-shadow:0 2px 14px rgba(0,0,0,.5);
+    font-family:var(--font-d); font-size:1rem; font-weight:700; color:#fff;
+    text-shadow:0 1px 10px rgba(24,34,48,.45);
 }
 .car-card__tag{
     position:absolute; top:12px; left:14px; z-index:4;
     font-size:.66rem; letter-spacing:.14em; text-transform:uppercase;
     padding:.35rem .7rem; border-radius:999px;
-    backdrop-filter:blur(6px); background:rgba(8,10,16,.55);
-    border:1px solid rgba(255,255,255,.16); color:#dfe6f5;
+    background:#fff; border:1px solid var(--line-2);
+    color:var(--text); box-shadow:0 6px 18px -8px rgba(24,34,48,.25);
 }
 
 /* --- interior reveal (motion design on hover) --- */
@@ -66,15 +66,15 @@
 }
 .interior-reveal__shade{
     position:absolute; inset:0;
-    background:linear-gradient(180deg, rgba(5,6,11,.22) 0%, rgba(5,6,11,.05) 40%, rgba(5,6,11,.75) 100%);
+    background:linear-gradient(180deg, rgba(24,34,48,.18) 0%, rgba(24,34,48,.05) 40%, rgba(24,34,48,.72) 100%);
 }
 .interior-reveal__chip{
     position:absolute; top:12px; right:14px;
     display:flex; align-items:center; gap:.45rem;
     font-size:.68rem; letter-spacing:.1em; font-weight:600;
-    color:#eaffff; background:rgba(5,8,14,.5);
-    border:1px solid rgba(56,240,255,.5); border-radius:999px;
-    padding:.35rem .75rem; backdrop-filter:blur(8px);
+    color:var(--text); background:#fff;
+    border:1px solid var(--line-2); border-radius:999px;
+    padding:.35rem .75rem; box-shadow:0 6px 18px -8px rgba(24,34,48,.3);
 }
 .interior-reveal__chip svg{ width:15px; height:15px; animation:spin360 5s linear infinite; }
 @keyframes spin360{ to{ transform:rotate(360deg); } }
@@ -116,7 +116,7 @@
 .spec-bar{ display:flex; align-items:center; gap:.7rem; margin-bottom:.4rem; }
 .spec-bar__name{ font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); width:64px; }
 .spec-bar__track{
-    flex:1; height:5px; border-radius:4px; background:rgba(255,255,255,.08); overflow:hidden;
+    flex:1; height:5px; border-radius:4px; background:rgba(24,34,48,.1); overflow:hidden;
 }
 .spec-bar__track i{
     display:block; height:100%; width:0;
@@ -131,7 +131,7 @@
 .car-card__price .k{ font-size:1.05rem; color:var(--muted); font-weight:500; }
 .car-card__actions{ display:flex; gap:.5rem; }
 .btn-icon,.btn-buy{
-    border:1px solid var(--line-2); background:var(--bg-2); color:var(--text);
+    border:1px solid var(--line-2); background:#fff; color:var(--text);
     border-radius:10px; cursor:pointer;
     display:inline-flex; align-items:center; justify-content:center;
     transition:all .3s var(--ease-out);
@@ -159,8 +159,8 @@
 
 /* card hover lift & 3D */
 .car-card:hover{
-    border-color:rgba(56,240,255,.35);
-    box-shadow:0 30px 70px -25px rgba(0,0,0,.8), 0 0 0 1px rgba(56,240,255,.12), 0 0 60px -20px rgba(56,240,255,.35);
+    border-color:rgba(255,107,0,.35);
+    box-shadow:0 26px 60px -28px rgba(24,34,48,.35);
 }
 
 /* cards enter on load with stagger */
@@ -181,35 +181,14 @@
     animation:spin360 8s linear infinite;
 }
 
-
-/* ============ PER-COLOUR TINTS ============ */
-.col-card[data-color="blue"] .car-card{ --tint: 56, 240, 255; }
-.col-card[data-color="blue"] .car-card:hover{
-    border-color: rgba(56,240,255,.45);
-    box-shadow:0 30px 70px -25px rgba(0,0,0,.8), 0 0 0 1px rgba(56,240,255,.14), 0 0 60px -18px rgba(56,240,255,.5);
+/* ============ UNIFIED ORANGE TINT ============ */
+.col-card[data-color] .car-card{ --tint: 255, 107, 0; }
+.col-card[data-color] .car-card:hover{
+    border-color: rgba(255,107,0,.4);
+    box-shadow:0 26px 60px -28px rgba(24,34,48,.35);
 }
-.col-card[data-color="blue"] .car-card::before{
-    background:radial-gradient(420px circle at var(--gx,50%) var(--gy,50%), rgba(56,240,255,.16), transparent 45%);
+.col-card[data-color] .car-card::before{
+    background:radial-gradient(420px circle at var(--gx,50%) var(--gy,50%), rgba(255,107,0,.12), transparent 45%);
 }
-.col-card[data-color="blue"] .btn-buy::before{ background:linear-gradient(100deg,#0e9ec9,#38f0ff); }
-.col-card[data-color="blue"] .interior-reveal__chip{ border-color:rgba(56,240,255,.6); }
-.col-card[data-color="red"] .car-card{ --tint: 255, 77, 125; }
-.col-card[data-color="red"] .car-card:hover{
-    border-color: rgba(255,77,125,.45);
-    box-shadow:0 30px 70px -25px rgba(0,0,0,.8), 0 0 0 1px rgba(255,77,125,.14), 0 0 60px -18px rgba(255,77,125,.5);
-}
-.col-card[data-color="red"] .car-card::before{
-    background:radial-gradient(420px circle at var(--gx,50%) var(--gy,50%), rgba(255,77,125,.16), transparent 45%);
-}
-.col-card[data-color="red"] .btn-buy::before{ background:linear-gradient(100deg,#c22a51,#ff4d7d); }
-.col-card[data-color="red"] .interior-reveal__chip{ border-color:rgba(255,77,125,.6); }
-.col-card[data-color="green"] .car-card{ --tint: 107, 255, 147; }
-.col-card[data-color="green"] .car-card:hover{
-    border-color: rgba(107,255,147,.45);
-    box-shadow:0 30px 70px -25px rgba(0,0,0,.8), 0 0 0 1px rgba(107,255,147,.14), 0 0 60px -18px rgba(107,255,147,.5);
-}
-.col-card[data-color="green"] .car-card::before{
-    background:radial-gradient(420px circle at var(--gx,50%) var(--gy,50%), rgba(107,255,147,.16), transparent 45%);
-}
-.col-card[data-color="green"] .btn-buy::before{ background:linear-gradient(100deg,#0f9d5c,#6bff93); }
-.col-card[data-color="green"] .interior-reveal__chip{ border-color:rgba(107,255,147,.6); }
+.col-card[data-color] .btn-buy::before{ background:var(--grad); }
+.col-card[data-color] .interior-reveal__chip{ border-color:rgba(255,107,0,.45); }
