@@ -90,8 +90,13 @@
 .section-head{ margin-bottom:3.25rem; }
 .section-head--left{ margin-bottom:2rem; }
 .section-kicker{
-    display:block; color:var(--accent); font-size:.78rem; letter-spacing:.3em;
+    display:inline-flex; align-items:center; gap:.6rem;
+    color:var(--accent); font-size:.78rem; letter-spacing:.3em;
     text-transform:uppercase; margin-bottom:1rem; font-weight:500;
+}
+.section-kicker::after{
+    content:''; width:34px; height:2px; margin-top:1px;
+    background:var(--grad);
 }
 .section-title{
     font-family:var(--font-d); font-weight:700;

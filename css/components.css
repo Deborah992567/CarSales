@@ -178,7 +178,7 @@ section[id], header[id]{ scroll-margin-top:110px; }
     transition:color .3s, border-color .3s;
 }
 .btn-ghost:hover{ color:var(--text); border-color:var(--accent); }
-.btn-ghost .arr{ display:inline-block; animation:arrDrop 1.6s ease-in-out infinite; }
+.btn-ghost .arr{ display:inline-block; animation:arrDrop 1.6s ease-in-out infinite; color:var(--accent); }
 @keyframes arrDrop{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(4px); } }
 
 .contact a.contact{ color:var(--text); }
