@@ -46,8 +46,8 @@ function initHero(canvas) {
     const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, .1, 200);
     camera.position.set(0, 1.35, 9.2);
 
-    scene.add(new THREE.HemisphereLight(0xbfd6ff, 0x0a0d16, .9));
-    const key = new THREE.DirectionalLight(0xffffff, 1.6);
+    scene.add(new THREE.HemisphereLight(0xfff3e4, 0xcdbfa9, .95));
+    const key = new THREE.DirectionalLight(0xffffff, 1.5);
     key.position.set(5, 8, 4);
     key.castShadow = true;
     key.shadow.mapSize.set(1024, 1024);
@@ -59,33 +59,33 @@ function initHero(canvas) {
         scene.add(l);
         return l;
     };
-    const cyanLight = neon(0x38f0ff, 0, 4, -3, 26);
-    const magentaLight = neon(0xff4d7d, 5, 1.4, 2.4, 18);
-    const goldLight = neon(0xffcf7d, -5, 1.2, 1, 12);
-    neon(0x38f0ff, -5, 5, -5, 6);
+    const orangeLight = neon(0xff6b00, 0, 4, -3, 26);
+    const amberLight = neon(0xffb35c, 5, 1.4, 2.4, 14);
+    const whiteLight = neon(0xfff6ea, -5, 1.2, 1, 10);
+    neon(0xff6b00, -5, 5, -5, 5);
 
     /* --- stylized concept car --- */
     const car = new THREE.Group();
 
     const paint = new THREE.MeshPhysicalMaterial({
-        color: 0x0e2236,
-        metalness: .72,
-        roughness: .28,
+        color: 0xf4f2ee,
+        metalness: .5,
+        roughness: .2,
         clearcoat: 1,
-        clearcoatRoughness: .12,
+        clearcoatRoughness: .1,
     });
     const glass = new THREE.MeshPhysicalMaterial({
-        color: 0x9fd4de,
-        metalness: .95,
-        roughness: .08,
+        color: 0x9fb8cc,
+        metalness: .9,
+        roughness: .1,
         transparent: true,
         opacity: .55,
         clearcoat: 1,
     });
-    const trim = new THREE.MeshStandardMaterial({ color: 0x0a0b10, metalness: .9, roughness: .35 });
-    const rimMat = new THREE.MeshStandardMaterial({ color: 0xc9d4e6, metalness: 1, roughness: .18 });
-    const glowCyan = new THREE.MeshBasicMaterial({ color: 0x38f0ff });
-    const glowRed = new THREE.MeshBasicMaterial({ color: 0xff4d7d });
+    const trim = new THREE.MeshStandardMaterial({ color: 0x232a33, metalness: .9, roughness: .35 });
+    const rimMat = new THREE.MeshStandardMaterial({ color: 0xcfd6df, metalness: 1, roughness: .18 });
+    const glowHead = new THREE.MeshBasicMaterial({ color: 0xfff2dc });
+    const glowTail = new THREE.MeshBasicMaterial({ color: 0xff6b00 });
 
     const box = (w, h, d, mat, x, y, z, cast = true) => {
         const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
@@ -146,11 +146,11 @@ function initHero(canvas) {
     });
 
     /* headlight + taillight strips */
-    const headL = new THREE.Mesh(new THREE.BoxGeometry(.06, .16, 1.15), glowCyan);
+    const headL = new THREE.Mesh(new THREE.BoxGeometry(.06, .16, 1.15), glowHead);
     headL.position.set(3.05, .42, 0);
     car.add(headL);
     headL.material.color.multiplyScalar(2);
-    const tailL = new THREE.Mesh(new THREE.BoxGeometry(.06, .16, 1.1), glowRed);
+    const tailL = new THREE.Mesh(new THREE.BoxGeometry(.06, .16, 1.1), glowTail);
     tailL.position.set(-2.68, .48, 0);
     car.add(tailL);
     tailL.material.color.multiplyScalar(2);
@@ -158,7 +158,7 @@ function initHero(canvas) {
     /* underglow disc */
     const glow = new THREE.Mesh(
         new THREE.CircleGeometry(1.6, 48),
-        new THREE.MeshBasicMaterial({ color: 0x1fdcff, transparent: true, opacity: .4, blending: THREE.AdditiveBlending, depthWrite: false })
+        new THREE.MeshBasicMaterial({ color: 0xff6b00, transparent: true, opacity: .35, blending: THREE.AdditiveBlending, depthWrite: false })
     );
     glow.rotation.x = -Math.PI / 2;
     glow.position.y = .06;
@@ -170,19 +170,19 @@ function initHero(canvas) {
 
     /* --- showroom rings on the floor --- */
     const ringGeo = new THREE.TorusGeometry(3.4, .018, 12, 120);
-    const ringMat = new THREE.MeshBasicMaterial({ color: 0x38f0ff, transparent: true, opacity: .8 });
+    const ringMat = new THREE.MeshBasicMaterial({ color: 0xff6b00, transparent: true, opacity: .8 });
     const ring = new THREE.Mesh(ringGeo, ringMat);
     ring.rotation.x = -Math.PI / 2;
     ring.position.y = .02;
     scene.add(ring);
-    const ring2 = new THREE.Mesh(new THREE.TorusGeometry(3.85, .009, 10, 120), new THREE.MeshBasicMaterial({ color: 0xff4d7d, transparent: true, opacity: .45 }));
+    const ring2 = new THREE.Mesh(new THREE.TorusGeometry(3.85, .009, 10, 120), new THREE.MeshBasicMaterial({ color: 0xffb35c, transparent: true, opacity: .45 }));
     ring2.rotation.x = -Math.PI / 2;
     ring2.position.y = .015;
     scene.add(ring2);
     const ticks = 36;
     for (let i = 0; i < ticks; i += 3) {
         const a = (i / ticks) * Math.PI * 2;
-        const t = new THREE.Mesh(new THREE.BoxGeometry(.03, .01, .5), new THREE.MeshBasicMaterial({ color: 0x38f0ff, transparent: true, opacity: .5 }));
+        const t = new THREE.Mesh(new THREE.BoxGeometry(.03, .01, .5), new THREE.MeshBasicMaterial({ color: 0xff6b00, transparent: true, opacity: .5 }));
         t.rotation.y = -a;
         t.position.set(Math.cos(a) * 3.6, .012, Math.sin(a) * 3.6);
         scene.add(t);
@@ -191,7 +191,7 @@ function initHero(canvas) {
     /* reflective floor */
     const floor = new THREE.Mesh(
         new THREE.CircleGeometry(20, 64),
-        new THREE.MeshStandardMaterial({ color: 0x0a0d16, metalness: .9, roughness: .4 })
+        new THREE.MeshStandardMaterial({ color: 0xf4efe6, metalness: .9, roughness: .32 })
     );
     floor.rotation.x = -Math.PI / 2;
     floor.position.y = 0;
@@ -202,9 +202,9 @@ function initHero(canvas) {
     const N = 700;
     const pos = new Float32Array(N * 3);
     const col = new Float32Array(N * 3);
-    const accentA = new THREE.Color(0x38f0ff);
-    const accentB = new THREE.Color(0xff4d7d);
-    const accentC = new THREE.Color(0xffcf7d);
+    const accentA = new THREE.Color(0xff6b00);
+    const accentB = new THREE.Color(0xffb35c);
+    const accentC = new THREE.Color(0xfff0df);
     for (let i = 0; i < N; i++) {
         const r = 4 + Math.random() * 7;
         const a = Math.random() * Math.PI * 2;
@@ -239,7 +239,7 @@ function initHero(canvas) {
     const sGeo = new THREE.BufferGeometry();
     sGeo.setAttribute('position', new THREE.BufferAttribute(spos, 3));
     const starMat = new THREE.PointsMaterial({
-        size: .09, color: 0xffffff, transparent: true, opacity: .5, sizeAttenuation: false,
+        size: .09, color: 0xfff6ea, transparent: true, opacity: .35, sizeAttenuation: false,
     });
     const stars = new THREE.Points(sGeo, starMat);
     scene.add(stars);
@@ -284,10 +284,10 @@ function initHero(canvas) {
         ring.rotation.y = t * .05;
         ring2.rotation.z = -t * .09;
 
-        cyanLight.position.x = Math.sin(t * .6) * 4.2;
-        cyanLight.position.z = -3.2 + Math.cos(t * .6) * 1.4;
-        magentaLight.position.y = 1.6 + Math.sin(t * .5) * .6;
-        goldLight.intensity = 11 + Math.sin(t * 2.2) * 5;
+        orangeLight.position.x = Math.sin(t * .6) * 4.2;
+        orangeLight.position.z = -3.2 + Math.cos(t * .6) * 1.4;
+        amberLight.position.y = 1.6 + Math.sin(t * .5) * .6;
+        whiteLight.intensity = 10 + Math.sin(t * 2.2) * 5;
 
         camera.position.x += ((mouse.x * .6) - camera.position.x) * .04;
         camera.position.y = 1.35 + (-mouse.y * .3);
@@ -321,7 +321,7 @@ function initCTA(canvas) {
     scene.add(group);
 
     /* spinning kinetic rings */
-    const mats = [0x38f0ff, 0xff4d7d, 0xffcf7d, 0x7f9bff];
+    const mats = [0xff6b00, 0xffb35c, 0xff9432, 0xf3ede4];
     const rings = mats.map((c, i) => {
         const g = new THREE.TorusGeometry(2.2 - i * .45, .02, 10, 90);
         const m = new THREE.MeshBasicMaterial({ color: c, transparent: true, opacity: .85 });
