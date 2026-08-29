@@ -8,5 +8,6 @@
 @import 'css/cards.css';
 @import 'css/sections.css';
 @import 'css/reveal.css';
+@import 'css/print.css';
 
 /* future print / theme modules can be appended here in cascade order */

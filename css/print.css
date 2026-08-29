@@ -1,0 +1,27 @@
+/* ============================================================
+   VELOCITY — print stylesheet (light, ink-friendly)
+   ============================================================ */
+@media print {
+    body{
+        background:#fff; color:#111;
+        -webkit-print-color-adjust:exact; print-color-adjust:exact;
+    }
+    .preloader, .cursor-dot, .cursor-ring, .scroll-progress,
+    .navbar-custom, .hero, .marquee, .cta, .footer__social,
+    #scene, #ctaScene, .btn-icon, .btn-buy, .modal-backdrop{
+        display:none !important;
+    }
+    .reveal, .col-card{ opacity:1 !important; transform:none !important; }
+    .section{ padding:1.5rem 0 !important; }
+    .hero{ min-height:0; }
+    .hero__title{ font-size:2.6rem; }
+    .car-card{
+        break-inside:avoid; border:1px solid #999; box-shadow:none !important;
+    }
+    .car-card__photo{ display:none; }
+    .car-card__media{ height:auto; background:#fff; }
+    .interior-reveal{ position:static; opacity:1 !important; visibility:visible !important; clip-path:none !important; transform:none !important; }
+    .card-title, .car-card__title{ color:#111; }
+    .spec-bar__track i{ width:var(--w,60%) !important; background:#333; }
+    a[href^="http"]::after{ content:" (" attr(href) ")"; font-size:.7em; color:#555; }
+}
