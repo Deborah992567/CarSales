@@ -120,6 +120,19 @@
 .filter-field select:focus{ outline:none; border-color:var(--accent); }
 .filter-field option{ background:var(--bg-2); color:var(--text); }
 
+/* ============ ACCESSIBILITY ============ */
+.skip-link{
+    position:fixed; top:-80px; left:16px; z-index:1200;
+    background:var(--grad); color:#fff; font-size:.85rem; font-weight:600;
+    padding:.6rem 1.2rem; border-radius:10px;
+    transition:top .3s var(--ease-out);
+}
+.skip-link:focus{ top:16px; }
+:focus-visible{
+    outline:2px solid var(--accent); outline-offset:3px; border-radius:6px;
+}
+section[id], header[id]{ scroll-margin-top:110px; }
+
 /* ============ BUTTONS ============ */
 .btn-glow{
     position:relative; display:inline-flex; align-items:center; justify-content:center;
