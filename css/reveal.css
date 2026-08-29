@@ -18,5 +18,10 @@
 @media (prefers-reduced-motion:reduce){
     .reveal{ opacity:1; transform:none; transition:none; }
     *,*::before,*::after{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+    .marquee__track{ animation:none !important; }
+    .hero .mouse__dot{ animation:none; }
+    .interior-reveal__img{ animation:none; transform:none; }
+    .gallery__item img{ transition:none; }
+    @keyframes none {}
 }
 
