@@ -277,3 +277,26 @@
     .btn-glow--lg{ padding:.9rem 1.6rem; }
     .car-card__specs{ gap:.4rem; }
 }
+/* ============ TESTIMONIALS ============ */
+.testimonials{ background:var(--bg-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.quote{
+    position:relative; margin:0; padding:1.8rem;
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:var(--radius); height:100%;
+    overflow:hidden;
+    transition:transform .45s var(--ease-out), border-color .4s;
+}
+.quote::before{
+    content:'“'; position:absolute; top:-14px; left:14px;
+    font-family:var(--font-d); font-size:6rem; line-height:1; color:rgba(56,240,255,.14);
+}
+.quote:hover{ transform:translateY(-6px); border-color:rgba(56,240,255,.35); }
+.quote__stars{ color:var(--gold); letter-spacing:.3em; margin-bottom:1rem; }
+.quote blockquote{
+    color:var(--text); font-size:.95rem; line-height:1.7; margin:0 0 1.3rem;
+    font-family:var(--font-t);
+}
+.quote figcaption{ display:flex; flex-direction:column; gap:.15rem; }
+.quote__name{ font-family:var(--font-d); font-weight:700; font-size:.95rem; }
+.quote__role{ color:var(--muted); font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; }
+@media (max-width:991px){ .quote{ padding:1.4rem; } }
