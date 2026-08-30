@@ -6,7 +6,7 @@
         background:#fff; color:#111;
         -webkit-print-color-adjust:exact; print-color-adjust:exact;
     }
-    .preloader, .cursor-dot, .cursor-ring, .scroll-progress,
+    .preloader, .scroll-progress,
     .navbar-custom, .hero, .marquee, .cta, .footer__social,
     #scene, #ctaScene, .btn-icon, .btn-buy, .modal-backdrop{
         display:none !important;

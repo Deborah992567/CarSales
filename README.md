@@ -62,7 +62,6 @@ lib/              vendored Three.js module build
 js/
   app.js          entry point / loader
   ui.js           preloader, scroll progress, navbar state
-  cursor.js       custom cursor
   reveal.js       scroll reveal, counters, parallax
   cards.js        3D tilt, glare, tap-reveal, filters
   hero3d.js       Three.js 3D hero + CTA scenes (module)
