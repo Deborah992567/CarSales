@@ -1,214 +1,133 @@
 /* ============================================================
    Cars NG — Three.js 3D showroom scenes
-   Hero: stylized concept car in a particle stage
-   CTA : kinetic energy ring
+   Hero: a real GLB car on an orange showroom plinth. Hover it
+   and the body splits apart (dismantle), reassembles, then lets
+   you inside with a photographed interior cutaway before
+   returning to the exterior. CTA: kinetic energy rings.
    ============================================================ */
 import * as THREE from '../lib/three.module.min.js';
+import { loadGLB } from '../lib/glb.js';
 
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const DPR = Math.min(window.devicePixelRatio || 1, 2);
+const INTERIOR_SRC = 'image/interior/interior-5.webp';
+const CAR_GLB = 'lib/car.glb';
+const CAR_YAW = 0;   /* tweak to Math.PI if the car faces away from the camera */
+const CAR_HEIGHT = 1.7;
 
-function safe(cb) {
-    try { return cb(); } catch (e) { console.warn('[3D] muted:', e.message); return null; }
-}
+/* choreography timing (seconds) */
+const T_HOVER = { dismantle: 1.15, assemble: 1.0, interior: 2.0, return: 1.15 };
 
-/* ---------------- shared helpers ---------------- */
+function safe(cb) { try { return cb(); } catch (e) { console.warn('[3D] muted:', e.message); return null; } }
+
+function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+function easeInOutCubic(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+function easeOutBack(t) { const c = 1.70158; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); }
+function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+function lerp(a, b, k) { return a + (b - a) * k; }
+
 function makeRenderer(canvas) {
     const r = new THREE.WebGLRenderer({
-        canvas,
-        alpha: true,
-        antialias: true,
-        powerPreference: 'high-performance',
+        canvas, alpha: true, antialias: true, powerPreference: 'high-performance',
     });
     r.setPixelRatio(DPR);
     r.shadowMap.enabled = true;
     r.shadowMap.type = THREE.PCFSoftShadowMap;
     r.toneMapping = THREE.ACESFilmicToneMapping;
-    r.toneMappingExposure = 1.1;
+    r.toneMappingExposure = 1.15;
     return r;
 }
 
-function onMouse(target) {
-    const m = { x: 0, y: 0 };
-    window.addEventListener('mousemove', (e) => {
-        m.x = (e.clientX / innerWidth) * 2 - 1;
-        m.y = (e.clientY / innerHeight) * 2 - 1;
+function onPointer() {
+    const p = { x: 0, y: 0 };
+    window.addEventListener('pointermove', (e) => {
+        p.x = (e.clientX / innerWidth) * 2 - 1;
+        p.y = (e.clientY / innerHeight) * 2 - 1;
     });
-    return m;
+    return p;
+}
+
+function loadTex(src) {
+    return new Promise((res) => {
+        const img = new Image();
+        img.onload = () => res(new THREE.CanvasTexture(img));
+        img.onerror = () => res(null);
+        img.src = src;
+    });
 }
 
 /* ---------------- hero scene ---------------- */
 function initHero(canvas) {
     if (!canvas) return null;
+    const hintEl = document.getElementById('carHint');
 
     const renderer = makeRenderer(canvas);
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, .1, 200);
-    camera.position.set(0, 1.35, 9.2);
+    const camera = new THREE.PerspectiveCamera(40, innerWidth / innerHeight, .1, 200);
+    const camBase = new THREE.Vector3(0, 1.55, 9.5);
+    const camLook = new THREE.Vector3(0, .85, 0);
+    const interiorCam = new THREE.Vector3(0, 1.0, 3.4);
+    const interiorLook = new THREE.Vector3(0, 1.0, .3);
+    camera.position.copy(camBase);
 
-    scene.add(new THREE.HemisphereLight(0xfff3e4, 0xcdbfa9, .95));
-    const key = new THREE.DirectionalLight(0xffffff, 1.5);
-    key.position.set(5, 8, 4);
+    scene.add(new THREE.HemisphereLight(0xfff3e4, 0xb8a68f, 1.05));
+    const key = new THREE.DirectionalLight(0xffffff, 1.4);
+    key.position.set(6, 9, 5);
     key.castShadow = true;
     key.shadow.mapSize.set(1024, 1024);
     scene.add(key);
 
     const neon = (color, x, y, z, i) => {
-        const l = new THREE.PointLight(color, i, 16, 1.6);
+        const l = new THREE.PointLight(color, i, 20, 1.4);
         l.position.set(x, y, z);
         scene.add(l);
         return l;
     };
-    const orangeLight = neon(0xff6b00, 0, 4, -3, 26);
-    const amberLight = neon(0xffb35c, 5, 1.4, 2.4, 14);
-    const whiteLight = neon(0xfff6ea, -5, 1.2, 1, 10);
-    neon(0xff6b00, -5, 5, -5, 5);
-
-    /* --- stylized concept car --- */
-    const car = new THREE.Group();
-
-    const paint = new THREE.MeshPhysicalMaterial({
-        color: 0xf4f2ee,
-        metalness: .5,
-        roughness: .2,
-        clearcoat: 1,
-        clearcoatRoughness: .1,
-    });
-    const glass = new THREE.MeshPhysicalMaterial({
-        color: 0x9fb8cc,
-        metalness: .9,
-        roughness: .1,
-        transparent: true,
-        opacity: .55,
-        clearcoat: 1,
-    });
-    const trim = new THREE.MeshStandardMaterial({ color: 0x232a33, metalness: .9, roughness: .35 });
-    const rimMat = new THREE.MeshStandardMaterial({ color: 0xcfd6df, metalness: 1, roughness: .18 });
-    const glowHead = new THREE.MeshBasicMaterial({ color: 0xfff2dc });
-    const glowTail = new THREE.MeshBasicMaterial({ color: 0xff6b00 });
-
-    const box = (w, h, d, mat, x, y, z, cast = true) => {
-        const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
-        m.position.set(x, y, z);
-        if (cast) m.castShadow = true;
-        car.add(m);
-        return m;
-    };
-
-    /* low body slab */
-    const bodyLow = box(5.1, .42, 1.72, paint, 0, .42, 0);
-    /* tapered hood + trunk (scaled boxes give a wedge silhouette) */
-    const hood = box(1.15, .34, 1.6, paint, 2.35, .4, 0);
-    hood.scale.set(1, 1, .92);
-    const nose = new THREE.Mesh(new THREE.CylinderGeometry(0, .5, 1.5, 4, 1), paint);
-    nose.rotation.z = -Math.PI / 2;
-    nose.scale.set(.9, 1.5, 1);
-    nose.position.set(3.0, .18, 0);
-    car.add(nose);
-
-    /* rockers / side skirts */
-    const skirtL = box(3.4, .16, .18, trim, 0, .16, -0.98);
-    const skirtR = box(3.4, .16, .18, trim, 0, .16, 0.98);
-    skirtL.rotation.z = -.04; skirtR.rotation.z = .04;
-
-    /* cabin canopy (fastback glass) */
-    const canopyMat = glass;
-    const cabinBack = box(2.1, .5, 1.34, canopyMat, -.05, 1.02, 0);
-    cabinBack.rotation.x = 0;
-    const windshield = new THREE.Mesh(new THREE.BoxGeometry(1.5, .42, 1.3), glass);
-    windshield.position.set(.85, .94, 0);
-    windshield.rotation.x = -.28;
-    car.add(windshield);
-    const roof = box(1.95, .1, 1.28, paint, .12, 1.32, 0);
-
-    /* rear spoiler */
-    const wing = box(1.7, .07, .34, paint, -2.55, 1.06, 0);
-    const wingStands = box(.12, .2, .1, trim, -2.4, .96, -.55);
-    const wingStands2 = box(.12, .2, .1, trim, -2.4, .96, .55);
-
-    /* diffuser */
-    box(.7, .2, 1.3, trim, -2.62, .24, 0);
-
-    /* wheels */
-    const wheelGeo = new THREE.CylinderGeometry(.46, .46, .34, 28);
-    const rimGeo = new THREE.CylinderGeometry(.27, .27, .4, 20);
-    const wheelPos = [[-1.55, .46, .95], [-1.55, .46, -.95], [1.7, .46, .95], [1.7, .46, -.95]];
-    wheelPos.forEach(p => {
-        const wheel = new THREE.Mesh(wheelGeo, trim);
-        wheel.rotation.z = Math.PI / 2;
-        wheel.position.set(p[0], p[1], p[2]);
-        wheel.castShadow = true;
-        car.add(wheel);
-        const rim = new THREE.Mesh(rimGeo, rimMat);
-        rim.rotation.z = Math.PI / 2;
-        rim.position.set(p[0] + 0.0001, p[1], p[2]);
-        car.add(rim);
-    });
-
-    /* headlight + taillight strips */
-    const headL = new THREE.Mesh(new THREE.BoxGeometry(.06, .16, 1.15), glowHead);
-    headL.position.set(3.05, .42, 0);
-    car.add(headL);
-    headL.material.color.multiplyScalar(2);
-    const tailL = new THREE.Mesh(new THREE.BoxGeometry(.06, .16, 1.1), glowTail);
-    tailL.position.set(-2.68, .48, 0);
-    car.add(tailL);
-    tailL.material.color.multiplyScalar(2);
-
-    /* underglow disc */
-    const glow = new THREE.Mesh(
-        new THREE.CircleGeometry(1.6, 48),
-        new THREE.MeshBasicMaterial({ color: 0xff6b00, transparent: true, opacity: .35, blending: THREE.AdditiveBlending, depthWrite: false })
-    );
-    glow.rotation.x = -Math.PI / 2;
-    glow.position.y = .06;
-    car.add(glow);
-
-    car.position.y = .3;
-    car.scale.setScalar(1.02);
-    scene.add(car);
+    const orangeLight = neon(0xff6b00, 0, 4.4, -6, 30);
+    const amberLight = neon(0xffb35c, 6, 1.6, 3, 16);
+    const whiteLight = neon(0xfff3e4, -6, 1.4, 2, 12);
 
     /* --- showroom rings on the floor --- */
-    const ringGeo = new THREE.TorusGeometry(3.4, .018, 12, 120);
-    const ringMat = new THREE.MeshBasicMaterial({ color: 0xff6b00, transparent: true, opacity: .8 });
-    const ring = new THREE.Mesh(ringGeo, ringMat);
-    ring.rotation.x = -Math.PI / 2;
-    ring.position.y = .02;
-    scene.add(ring);
-    const ring2 = new THREE.Mesh(new THREE.TorusGeometry(3.85, .009, 10, 120), new THREE.MeshBasicMaterial({ color: 0xffb35c, transparent: true, opacity: .45 }));
-    ring2.rotation.x = -Math.PI / 2;
-    ring2.position.y = .015;
-    scene.add(ring2);
-    const ticks = 36;
-    for (let i = 0; i < ticks; i += 3) {
+    const addRing = (r, tube, color, op) => {
+        const m = new THREE.Mesh(new THREE.TorusGeometry(r, tube, 12, 140),
+            new THREE.MeshBasicMaterial({ color, transparent: true, opacity: op }));
+        m.rotation.x = -Math.PI / 2;
+        m.position.y = .02;
+        scene.add(m);
+        return m;
+    };
+    const ring = addRing(4.1, .02, 0xff6b00, .85);
+    const ring2 = addRing(4.6, .01, 0xffb35c, .45);
+    const ticks = 40;
+    for (let i = 0; i < ticks; i += 4) {
         const a = (i / ticks) * Math.PI * 2;
-        const t = new THREE.Mesh(new THREE.BoxGeometry(.03, .01, .5), new THREE.MeshBasicMaterial({ color: 0xff6b00, transparent: true, opacity: .5 }));
+        const t = new THREE.Mesh(new THREE.BoxGeometry(.035, .012, .6),
+            new THREE.MeshBasicMaterial({ color: 0xff6b00, transparent: true, opacity: .5 }));
         t.rotation.y = -a;
-        t.position.set(Math.cos(a) * 3.6, .012, Math.sin(a) * 3.6);
+        t.position.set(Math.cos(a) * 4.35, .015, Math.sin(a) * 4.35);
         scene.add(t);
     }
 
-    /* reflective floor */
+    /* reflective plinth */
     const floor = new THREE.Mesh(
-        new THREE.CircleGeometry(20, 64),
-        new THREE.MeshStandardMaterial({ color: 0xf4efe6, metalness: .9, roughness: .32 })
+        new THREE.CircleGeometry(22, 64),
+        new THREE.MeshStandardMaterial({ color: 0xf4efe6, metalness: .92, roughness: .3 })
     );
     floor.rotation.x = -Math.PI / 2;
-    floor.position.y = 0;
     floor.receiveShadow = true;
     scene.add(floor);
 
     /* --- particle field --- */
-    const N = 700;
+    const N = 620;
     const pos = new Float32Array(N * 3);
     const col = new Float32Array(N * 3);
     const accentA = new THREE.Color(0xff6b00);
     const accentB = new THREE.Color(0xffb35c);
     const accentC = new THREE.Color(0xfff0df);
     for (let i = 0; i < N; i++) {
-        const r = 4 + Math.random() * 7;
+        const r = 4.6 + Math.random() * 8;
         const a = Math.random() * Math.PI * 2;
-        const y = (Math.random() - .5) * 6;
+        const y = (Math.random() - .5) * 7;
         pos[i * 3] = Math.cos(a) * r;
         pos[i * 3 + 1] = y;
         pos[i * 3 + 2] = Math.sin(a) * r;
@@ -218,15 +137,14 @@ function initHero(canvas) {
     const pGeo = new THREE.BufferGeometry();
     pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     pGeo.setAttribute('color', new THREE.BufferAttribute(col, 3));
-    const pMat = new THREE.PointsMaterial({
-        size: .05, vertexColors: true, transparent: true, opacity: .85,
+    const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({
+        size: .055, vertexColors: true, transparent: true, opacity: .8,
         blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true,
-    });
-    const particles = new THREE.Points(pGeo, pMat);
+    }));
     scene.add(particles);
 
     /* starfield */
-    const SN = 650;
+    const SN = 700;
     const spos = new Float32Array(SN * 3);
     for (let i = 0; i < SN; i++) {
         const th = Math.random() * Math.PI * 2;
@@ -238,16 +156,189 @@ function initHero(canvas) {
     }
     const sGeo = new THREE.BufferGeometry();
     sGeo.setAttribute('position', new THREE.BufferAttribute(spos, 3));
-    const starMat = new THREE.PointsMaterial({
-        size: .09, color: 0xfff6ea, transparent: true, opacity: .35, sizeAttenuation: false,
-    });
-    const stars = new THREE.Points(sGeo, starMat);
+    const stars = new THREE.Points(sGeo, new THREE.PointsMaterial({
+        size: .08, color: 0xfff6ea, transparent: true, opacity: .35, sizeAttenuation: false,
+    }));
     scene.add(stars);
 
-    /* --- interaction --- */
-    const mouse = onMouse();
-    let targetRotY = 0, targetTilt = 0;
+    /* --- the car (GLB) + fallback --- */
+    const group = new THREE.Group();
+    let meshes = [];
+    let mats = [];
+    let carFilled = false;
+    let interiorTex = null;
+    loadTex(INTERIOR_SRC).then(t => { interiorTex = t; });
 
+    loadGLB(CAR_GLB, CAR_HEIGHT)
+        .then(({ group: g, meshes: ms }) => {
+            meshes = ms;
+            mats = ms.map(m => m.material);
+            g.name = 'car';
+            g.rotation.y = CAR_YAW;
+            group.add(g);
+            carFilled = true;
+        })
+        .catch(() => buildFallbackCar());
+
+    function buildFallbackCar() {
+        const mat = new THREE.MeshPhysicalMaterial({
+            color: 0xff6b00, metalness: .5, roughness: .3, clearcoat: 1,
+        });
+        const slab = new THREE.Mesh(new THREE.BoxGeometry(1.5, 1.7, 1.1), mat);
+        slab.position.y = .85;
+        slab.name = 'car';
+        group.add(slab);
+        meshes = [slab];
+        mats = [mat];
+        carFilled = true;
+    }
+
+    /* clones for the split (left / right halves) */
+    let halfL = null, halfR = null;
+    const buildHalves = () => {
+        if (halfL) return;
+        halfL = new THREE.Group();
+        halfR = new THREE.Group();
+        meshes.forEach(m => {
+            const mL = m.material.clone();
+            const mR = m.material.clone();
+            mL.transparent = true;
+            mR.transparent = true;
+            mL.clippingPlanes = [new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0)];
+            mR.clippingPlanes = [new THREE.Plane(new THREE.Vector3(1, 0, 0), 0)];
+            const l = new THREE.Mesh(m.geometry, mL);
+            const r = new THREE.Mesh(m.geometry, mR);
+            l.position.copy(m.position); l.scale.copy(m.scale);
+            r.position.copy(m.position); r.scale.copy(m.scale);
+            halfL.add(l); halfR.add(r);
+        });
+        halfL.visible = halfR.visible = false;
+        group.add(halfL); group.add(halfR);
+    };
+
+    /* interior cutaway panel */
+    let interior = null;
+    const buildInterior = () => {
+        if (interior) return;
+        if (!interiorTex || !interiorTex.image) return;
+        const tex = interiorTex;
+        const ratio = tex.image.naturalHeight / tex.image.naturalWidth || 1;
+        const w = 2.3, h = Math.min(2.3 * ratio, 1.9);
+        const geo = new THREE.PlaneGeometry(w, h);
+        const mat = new THREE.MeshBasicMaterial({
+            map: tex, transparent: true, opacity: 0, side: THREE.DoubleSide,
+        });
+        interior = new THREE.Mesh(geo, mat);
+        interior.position.set(0, 1.0, .55);
+        group.add(interior);
+    };
+
+    scene.add(group);
+
+    function setupHalves() {
+        if (!meshes.length) return;
+        buildHalves();
+        buildInterior();
+    }
+
+    /* --- choreography state machine --- */
+    let phase = 'idle';       /* idle | dismantle | assemble | interior | return */
+    let tPhase = 0;
+    let halfSpread = 0;
+    const pointer = onPointer();
+    const ray = new THREE.Raycaster();
+    const ndc = new THREE.Vector2();
+    const sphere = new THREE.Sphere(new THREE.Vector3(0, .9, 0), 3.4);
+
+    const startShow = () => {
+        if (reduced || phase !== 'idle') return;
+        phase = 'dismantle';
+        tPhase = 0;
+        choreoSetup();
+        if (hintEl) hintEl.classList.add('hide');
+    };
+    const playSeg = (label) => {
+        const dur = T_HOVER[label];
+        return { t: clamp(tPhase / dur, 0, 1), done: tPhase >= dur };
+    };
+
+    /* during the choreography only the half-shells render */
+    const choreoSetup = () => {
+        mats.forEach(m => { m.visible = false; });
+        if (halfL) { halfL.visible = true; halfR.visible = true; }
+    };
+    const choreoTearDown = () => {
+        mats.forEach(m => { m.visible = true; });
+        if (halfL) { halfL.visible = false; halfR.visible = false; }
+    };
+    const halfOpacity = (o) => {
+        if (halfL) halfL.traverse(n => { if (n.isMesh) n.material.opacity = o; });
+        if (halfR) halfR.traverse(n => { if (n.isMesh) n.material.opacity = o; });
+    };
+    const applySpread = () => {
+        if (halfL) halfL.position.x = -halfSpread;
+        if (halfR) halfR.position.x = halfSpread;
+    };
+
+    const tickChoreo = (dt) => {
+        tPhase += dt;
+        let seg;
+        switch (phase) {
+            case 'dismantle':
+                seg = playSeg('dismantle');
+                halfSpread = easeOutBack(seg.t) * 2.6;
+                halfOpacity(1);
+                applySpread();
+                break;
+            case 'assemble':
+                seg = playSeg('assemble');
+                halfSpread = easeOutCubic(1 - seg.t) * 2.6;
+                halfOpacity(1);
+                applySpread();
+                break;
+            case 'interior':
+                seg = playSeg('interior');
+                halfOpacity(1 - easeInOutCubic(seg.t) * .82);
+                if (interior) {
+                    interior.visible = true;
+                    interior.material.opacity = easeOutCubic(seg.t) * .96;
+                    const k = 1 + (1 - seg.t) * .35;
+                    interior.scale.set(k, k, 1);
+                }
+                camera.position.lerp(interiorCam.clone(), Math.min(dt * 2.5, 1));
+                camera.lookAt(interiorLook);
+                break;
+            case 'return':
+                seg = playSeg('return');
+                halfSpread = 0;
+                applySpread();
+                halfOpacity(easeInOutCubic(seg.t));
+                if (interior) interior.material.opacity = 1 - easeInOutCubic(seg.t);
+                camera.position.lerp(camBase.clone(), Math.min(dt * 3, 1));
+                camera.lookAt(camLook);
+                break;
+            default:
+                break;
+        }
+
+        if (phase === 'dismantle' && seg && seg.done) { phase = 'assemble'; tPhase = 0; }
+        else if (phase === 'assemble' && seg && seg.done) { phase = 'interior'; tPhase = 0; }
+        else if (phase === 'interior' && seg && seg.done) { phase = 'return'; tPhase = 0; }
+        else if (phase === 'return' && seg && seg.done) {
+            phase = 'idle'; tPhase = 0;
+            if (interior) { interior.visible = false; interior.material.opacity = 0; }
+            choreoTearDown();
+            if (hintEl) hintEl.classList.remove('hide');
+        }
+    };
+
+    const hitCar = () => {
+        ndc.set(pointer.x, pointer.y);
+        ray.setFromCamera(ndc, camera);
+        if (ray.ray.intersectsSphere(sphere)) startShow();
+    };
+
+    /* --- interaction / resize --- */
     const onResize = () => {
         camera.aspect = innerWidth / innerHeight;
         camera.updateProjectionMatrix();
@@ -255,12 +346,11 @@ function initHero(canvas) {
     };
     window.addEventListener('resize', onResize);
     onResize();
-    renderer.setSize(innerWidth, innerHeight);
+
+    renderer.localClippingEnabled = true;
 
     const clock = new THREE.Clock();
     let raf = 0;
-
-    /* pause when the hero scrolls out of view */
     let active = true;
     const visIO = new IntersectionObserver(([en]) => {
         active = en.isIntersecting;
@@ -269,29 +359,37 @@ function initHero(canvas) {
     visIO.observe(canvas);
 
     const tick = () => {
-        const t = clock.getElapsedTime();
         if (!active && !reduced) return;
-        targetRotY += ((mouse.x * .5) - targetRotY) * .05;
-        targetTilt += ((-mouse.y * .28) - targetTilt) * .05;
+        const dt = Math.min(clock.getDelta(), .05) || .016;
+        const t = clock.elapsedTime;
 
-        car.rotation.y = Math.sin(t * .28) * .32 + targetRotY;
-        car.rotation.x = targetTilt * .4 + Math.sin(t * .6) * .03;
-        car.position.y = .3 + Math.sin(t * .85) * .08;
+        if (carFilled) {
+            setupHalves();
+            if (phase === 'idle') {
+                hitCar();
+                group.rotation.y = CAR_YAW + Math.sin(t * .5) * .24 + pointer.x * .18;
+                group.position.y = Math.sin(t * .8) * .06;
+                ring.rotation.y = t * .05;
+                ring2.rotation.z = -t * .09;
+            } else {
+                tickChoreo(dt);
+            }
+        }
 
-        particles.rotation.y = t * .045;
-        particles.rotation.x = Math.sin(t * .11) * .05;
+        particles.rotation.y = t * .05;
         stars.rotation.y = t * .006;
-        ring.rotation.y = t * .05;
-        ring2.rotation.z = -t * .09;
+        orangeLight.position.x = Math.sin(t * .55) * 5;
+        orangeLight.position.z = -5 + Math.cos(t * .55) * 1.4;
+        amberLight.intensity = 14 + Math.sin(t * 2.1) * 5;
 
-        orangeLight.position.x = Math.sin(t * .6) * 4.2;
-        orangeLight.position.z = -3.2 + Math.cos(t * .6) * 1.4;
-        amberLight.position.y = 1.6 + Math.sin(t * .5) * .6;
-        whiteLight.intensity = 10 + Math.sin(t * 2.2) * 5;
-
-        camera.position.x += ((mouse.x * .6) - camera.position.x) * .04;
-        camera.position.y = 1.35 + (-mouse.y * .3);
-        camera.lookAt(0, .5, 0);
+        if (phase === 'idle') {
+            camera.position.set(
+                lerp(camera.position.x, pointer.x * .55, .03),
+                lerp(camera.position.y, camBase.y, .03),
+                lerp(camera.position.z, camBase.z, .03)
+            );
+            camera.lookAt(camLook);
+        }
 
         renderer.render(scene, camera);
         if (!reduced && active) raf = requestAnimationFrame(tick);
@@ -320,7 +418,6 @@ function initCTA(canvas) {
     const group = new THREE.Group();
     scene.add(group);
 
-    /* spinning kinetic rings */
     const mats = [0xff6b00, 0xffb35c, 0xff9432, 0xf3ede4];
     const rings = mats.map((c, i) => {
         const g = new THREE.TorusGeometry(2.2 - i * .45, .02, 10, 90);
@@ -332,7 +429,6 @@ function initCTA(canvas) {
         return mesh;
     });
 
-    /* speedline particles */
     const CP = 260;
     const cpos = new Float32Array(CP * 3);
     const cc = new Float32Array(CP * 3);
@@ -342,8 +438,7 @@ function initCTA(canvas) {
         cpos[i * 3] = Math.cos(a) * r;
         cpos[i * 3 + 1] = (Math.random() - .5) * 3.4;
         cpos[i * 3 + 2] = Math.sin(a) * r;
-        const ac = mats[i % mats.length];
-        const color = new THREE.Color(ac);
+        const color = new THREE.Color(mats[i % mats.length]);
         cc[i * 3] = color.r; cc[i * 3 + 1] = color.g; cc[i * 3 + 2] = color.b;
     }
     const cg = new THREE.BufferGeometry();
@@ -363,9 +458,18 @@ function initCTA(canvas) {
     });
     visIO.observe(canvas);
     const clock = new THREE.Clock();
+    const onResize = () => {
+        const w = canvas.clientWidth, h = canvas.clientHeight;
+        if (!w || !h) return;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h, false);
+    };
+    window.addEventListener('resize', onResize);
+    onResize();
     const tick = () => {
-        const t = clock.getElapsedTime();
         if (!active && !reduced) return;
+        const t = clock.getElapsedTime();
         rings.forEach((m, i) => {
             m.rotation.z = t * (.35 + i * .15) * (i % 2 ? 1 : -1);
             m.rotation.x = Math.PI / 2.2 + i * .35 + Math.sin(t * .4 + i) * .12;
@@ -376,16 +480,6 @@ function initCTA(canvas) {
         if (!reduced && active) raf = requestAnimationFrame(tick);
     };
     tick();
-
-    const onResize = () => {
-        const w = canvas.clientWidth, h = canvas.clientHeight;
-        if (!w || !h) return;
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-        renderer.setSize(w, h, false);
-    };
-    window.addEventListener('resize', onResize);
-    onResize();
 
     return {
         dispose: () => {
