@@ -65,6 +65,23 @@
 .hero__marquee-hero{
     color:var(--muted); font-size:.72rem; letter-spacing:.3em; text-transform:uppercase;
 }
+.car-hint{
+    position:absolute; left:50%; bottom:5.6rem; transform:translateX(-50%);
+    z-index:4; display:inline-flex; align-items:center; gap:.65rem;
+    background:#fff; border:1px solid var(--line-2); border-radius:999px;
+    padding:.62rem 1.15rem; box-shadow:var(--shadow);
+    font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);
+    white-space:nowrap; pointer-events:none;
+    transition:opacity .45s, transform .45s;
+}
+.car-hint.hide{ opacity:0; transform:translate(-50%, 12px); }
+.car-hint__dot{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--accent); animation:livePulse 1.8s infinite;
+}
+@media (max-width: 768px){
+    .car-hint{ bottom:4.9rem; font-size:.66rem; letter-spacing:.1em; padding:.5rem .9rem; max-width:88vw; white-space:normal; text-align:center; }
+}
 /* ============ MARQUEE ============ */
 .marquee{
     position:relative; overflow:hidden;
@@ -265,6 +282,58 @@
 .step{ display:flex; gap:1rem; align-items:flex-start; }
 .step__n{ font-family:var(--font-d); font-weight:700; color:var(--accent); font-size:.95rem; }
 .step p{ margin:0; color:var(--muted); font-size:.9rem; line-height:1.55; }
+
+/* ---------- payment steps ---------- */
+.modal-panel__pay{ margin-top:1.5rem; border-top:1px dashed var(--line-2); padding-top:1.4rem; }
+.pay__step{
+    animation:payIn .45s var(--ease-out);
+}
+@keyframes payIn{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:none; } }
+.pay__title{ font-family:var(--font-d); font-weight:700; font-size:1.15rem; margin-bottom:.35rem; }
+.pay__car{ color:var(--accent); }
+.pay__lede{ color:var(--muted); font-size:.85rem; line-height:1.55; margin-bottom:1.1rem; }
+.pay__row{ display:grid; grid-template-columns:1fr 1fr; gap:.85rem; }
+.pay-field{ display:flex; flex-direction:column; gap:.4rem; font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:.9rem; }
+.pay-input{
+    width:100%; padding:.72rem .9rem; border-radius:12px;
+    border:1px solid var(--line-2); background:var(--bg-2);
+    font-size:.95rem; color:var(--text); letter-spacing:normal; text-transform:none;
+    font-family:var(--font-t); transition:border-color .3s, box-shadow .3s, background .3s;
+}
+.pay-input:focus{
+    outline:none; border-color:var(--accent); background:#fff;
+    box-shadow:0 0 0 3px rgba(255,107,0,.15);
+}
+.pay__fine{ font-size:.74rem; color:var(--muted); margin:.85rem 0 0; text-align:center; }
+.pay__back{
+    display:block; margin:.8rem auto 0; background:none; border:none; cursor:pointer;
+    color:var(--muted); font-size:.8rem; letter-spacing:.06em;
+}
+.pay__back:hover{ color:var(--accent); }
+.pay__amount{
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--bg-2); border:1px solid var(--line); border-radius:12px;
+    padding:.8rem 1rem; margin-bottom:.9rem;
+}
+.pay__amount span{ color:var(--muted); font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; }
+.pay__amount strong{ font-family:var(--font-d); font-size:1.25rem; font-weight:700; }
+.pay__spinner{
+    width:44px; height:44px; margin:1.2rem auto .9rem; border-radius:50%;
+    border:3px solid var(--line-2); border-top-color:var(--accent);
+    animation:spin .8s linear infinite;
+}
+@keyframes spin{ to{ transform:rotate(360deg); } }
+.pay__spin-msg{ text-align:center; color:var(--muted); font-size:.85rem; letter-spacing:.08em; }
+.pay__check{
+    width:52px; height:52px; margin:.4rem auto 1rem; border-radius:50%;
+    display:grid; place-items:center; font-size:1.5rem; color:#fff;
+    background:var(--grad); box-shadow:0 12px 30px -12px rgba(255,107,0,.7);
+    animation:pop .5s var(--ease-out);
+}
+@keyframes pop{ from{ transform:scale(.4); opacity:0; } to{ transform:scale(1); opacity:1; } }
+.pay__step--done{ text-align:center; }
+.pay__step--done .pay__lede{ text-align:center; }
+@media (max-width: 480px){ .pay__row{ grid-template-columns:1fr; gap:0; } }
 @media (max-width:768px){
     .modal-panel{ grid-template-columns:1fr; }
     .modal-panel__media{ min-height:240px; padding-top:56.25%; }

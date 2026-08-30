@@ -33,6 +33,7 @@
     <link rel="dns-prefetch" href="https://images.pexels.com">
     <link rel="preload" as="image" href="image/pexels-tiwi-riders-1256368688-25819740.webp" fetchpriority="high">
     <link rel="preload" as="image" href="image/interior/interior-5.webp" fetchpriority="high">
+    <link rel="preload" as="fetch" href="lib/car.glb">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="car.css">
@@ -145,6 +146,10 @@
                 <a href="#showroom" class="btn-glow btn-glow--lg"><span>Explore showroom</span></a>
                 <a href="#about" class="btn-ghost">Discover the story <span class="arr">↓</span></a>
             </div>
+        </div>
+
+        <div class="car-hint" id="carHint">
+            <span class="car-hint__dot"></span> Hover the car — it comes apart, then lets you inside
         </div>
 
         <div class="hero__footer">
@@ -850,6 +855,57 @@
                     <div class="step"><span class="step__n">03</span><p>We deliver to your doorstep — white-glove, insured.</p></div>
                 </div>
                 <button class="btn-glow btn-glow--lg w-100" id="modalConfirm"><span>Confirm reservation</span></button>
+
+                <div class="modal-panel__pay" id="modalPay" hidden>
+                    <div class="pay__step pay__step--details" id="payStepDetails">
+                        <h4 class="pay__title">Reserve <span class="pay__car" id="payCar"></span></h4>
+                        <p class="pay__lede">Hold the car for 7 days. Fully refundable, no questions asked.</p>
+                        <div class="pay__row">
+                            <label class="pay-field">Full name
+                                <input class="pay-input" id="payName" autocomplete="name" placeholder="Ada Obi" required>
+                            </label>
+                            <label class="pay-field">Email
+                                <input class="pay-input" id="payEmail" type="email" autocomplete="email" inputmode="email" placeholder="you@mail.com" required>
+                            </label>
+                        </div>
+                        <button class="btn-glow w-100" id="payNext"><span>Continue to payment</span></button>
+                        <p class="pay__fine">Simulated checkout — no real card is ever charged.</p>
+                    </div>
+
+                    <div class="pay__step pay__step--card" id="payStepCard" hidden>
+                        <h4 class="pay__title">Payment details</h4>
+                        <p class="pay__lede">Enter any test card details to see the flow.</p>
+                        <label class="pay-field">Card number
+                            <input class="pay-input pay-input--card" id="payCard" inputmode="numeric" autocomplete="cc-number" maxlength="19" placeholder="1234 5678 9012 3456" required>
+                        </label>
+                        <div class="pay__row">
+                            <label class="pay-field">Expiry
+                                <input class="pay-input" id="payExp" inputmode="numeric" autocomplete="cc-exp" maxlength="5" placeholder="MM/YY" required>
+                            </label>
+                            <label class="pay-field">CVC
+                                <input class="pay-input" id="payCvc" inputmode="numeric" autocomplete="cc-csc" maxlength="4" placeholder="123" required>
+                            </label>
+                        </div>
+                        <div class="pay__amount">
+                            <span>Deposit</span>
+                            <strong class="grad-text" id="payAmount">$2,000</strong>
+                        </div>
+                        <button class="btn-glow w-100" id="paySubmit"><span>Pay deposit</span></button>
+                        <button class="pay__back" id="payBack" type="button">&larr; Back</button>
+                    </div>
+
+                    <div class="pay__step pay__step--spin" id="payStepSpin" hidden>
+                        <div class="pay__spinner"></div>
+                        <p class="pay__spin-msg">Authorising your reservation…</p>
+                    </div>
+
+                    <div class="pay__step pay__step--done" id="payStepDone" hidden>
+                        <div class="pay__check">✓</div>
+                        <h4 class="pay__title">Reservation confirmed</h4>
+                        <p class="pay__lede">Booking reference <strong id="payOrderNo"></strong> — a specialist will reach out within 24h to arrange delivery.</p>
+                        <button class="btn-glow w-100" id="payFinish"><span>Done</span></button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
