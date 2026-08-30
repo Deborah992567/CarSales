@@ -1,10 +1,10 @@
 /* ============================================================
-   Cars NG — reservation modal + enquiry form
+   Cars NG — reservation modal + simulated checkout + forms
    ============================================================ */
 (function () {
     'use strict';
 
-    /* Reservation modal */
+    /* ---------- Reservation modal ---------- */
     const backdrop = document.getElementById('modalBackdrop');
     const closeBtn = document.getElementById('modalClose');
     const modalImg = document.getElementById('modalImg');
@@ -12,41 +12,116 @@
     const modalPrice = document.getElementById('modalPrice');
     const modalConfirm = document.getElementById('modalConfirm');
 
+    const modalPay = document.getElementById('modalPay');
+    const paySteps = {
+        details: document.getElementById('payStepDetails'),
+        card: document.getElementById('payStepCard'),
+        spin: document.getElementById('payStepSpin'),
+        done: document.getElementById('payStepDone'),
+    };
+    const payCar = document.getElementById('payCar');
+    const payName = document.getElementById('payName');
+    const payEmail = document.getElementById('payEmail');
+    const payCard = document.getElementById('payCard');
+    const payExp = document.getElementById('payExp');
+    const payCvc = document.getElementById('payCvc');
+    const payOrderNo = document.getElementById('payOrderNo');
+    const payNext = document.getElementById('payNext');
+    const paySubmit = document.getElementById('paySubmit');
+    const payBack = document.getElementById('payBack');
+    const payFinish = document.getElementById('payFinish');
+
     let lastTrigger = null;
+    let payTimer = 0;
+
+    const showStep = (name) => {
+        Object.entries(paySteps).forEach(([k, el]) => { el.hidden = k !== name; });
+        const focusEl = { details: payName, card: payCard }[name];
+        if (focusEl) setTimeout(() => focusEl.focus(), 120);
+    };
+
     const openModal = (btn) => {
         if (!backdrop) return;
+        clearTimeout(payTimer);
         lastTrigger = btn;
         modalTitle.textContent = btn.dataset.buy;
         modalPrice.textContent = btn.dataset.price.replace('$', '').replace(',', '');
         modalImg.src = btn.dataset.img;
         backdrop.classList.add('open');
         document.body.style.overflow = 'hidden';
+        if (modalPay) modalPay.hidden = true;
+        modalConfirm.style.display = '';
         if (closeBtn) closeBtn.focus();
     };
     document.addEventListener('click', (e) => {
         const buy = e.target.closest('[data-buy]');
         if (buy) openModal(buy);
     });
+
     const closeModal = () => {
         if (!backdrop) return;
+        clearTimeout(payTimer);
         backdrop.classList.remove('open');
         document.body.style.overflow = '';
         if (lastTrigger) lastTrigger.focus();
     };
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     if (backdrop) backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeModal(); });
-    if (modalConfirm) modalConfirm.addEventListener('click', () => {
-        modalConfirm.innerHTML = '<span>✓ Reserved — see you soon</span>';
-        setTimeout(closeModal, 1200);
-        setTimeout(() => modalConfirm.innerHTML = '<span>Confirm reservation</span>', 1600);
-    });
-
-    /* Esc closes the modal */
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && backdrop && backdrop.classList.contains('open')) closeModal();
     });
 
-    /* Enquiry form */
+    /* ---------- Simulated checkout ---------- */
+    const formatCard = (v) => v.replace(/\D/g, '').slice(0, 16).replace(/(\d{4})(?=\d)/g, '$1 ');
+    const formatExp = (v) => {
+        const d = v.replace(/\D/g, '').slice(0, 4);
+        if (d.length < 3) return d;
+        if (d.slice(2) === '00') return d.slice(0, 2) + '/01';
+        if (d.length === 4 && +d.slice(0, 2) === 0) return '01/' + d.slice(2);
+        return d.slice(0, 2) + '/' + d.slice(2);
+    };
+    if (payCard) payCard.addEventListener('input', () => { payCard.value = formatCard(payCard.value); });
+    if (payExp) payExp.addEventListener('input', () => { payExp.value = formatExp(payExp.value); });
+
+    if (modalConfirm) modalConfirm.addEventListener('click', () => {
+        if (!modalPay || !payCar) return;
+        payCar.textContent = modalTitle.textContent;
+        modalConfirm.style.display = 'none';
+        modalPay.hidden = false;
+        showStep('details');
+    });
+
+    if (payNext) payNext.addEventListener('click', () => {
+        if (!payName.value.trim() || !payEmail.checkValidity()) {
+            payName.reportValidity();
+            payEmail.reportValidity();
+            return;
+        }
+        showStep('card');
+    });
+
+    if (payBack) payBack.addEventListener('click', () => showStep('details'));
+
+    if (paySubmit) paySubmit.addEventListener('click', () => {
+        const card = payCard.value.replace(/\D/g, '');
+        const exp = payExp.value.replace(/\D/g, '');
+        const valid = card.length === 16 && exp.length === 4 && payCvc.value.replace(/\D/g, '').length >= 3;
+        if (!valid) {
+            payCard.reportValidity();
+            payExp.reportValidity();
+            payCvc.reportValidity();
+            return;
+        }
+        showStep('spin');
+        payTimer = setTimeout(() => {
+            payOrderNo.textContent = 'NG-' + Math.floor(100000 + Math.random() * 899999);
+            showStep('done');
+        }, 1900);
+    });
+
+    if (payFinish) payFinish.addEventListener('click', closeModal);
+
+    /* ---------- Enquiry form ---------- */
     const form = document.getElementById('contactForm');
     if (form) form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -55,7 +130,7 @@
         setTimeout(() => document.getElementById('formOk').classList.remove('show'), 4200);
     });
 
-    /* Newsletter */
+    /* ---------- Newsletter ---------- */
     const news = document.getElementById('newsForm');
     if (news) news.addEventListener('submit', (e) => {
         e.preventDefault();
