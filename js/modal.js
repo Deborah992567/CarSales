@@ -53,6 +53,19 @@
         modalConfirm.style.display = '';
         if (closeBtn) closeBtn.focus();
     };
+
+    /* trap Tab focus inside the open dialog so it cannot escape into the page */
+    const focusables = () => Array.from(
+        backdrop.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+    ).filter(el => !el.disabled && el.offsetParent !== null);
+    backdrop.addEventListener('keydown', (e) => {
+        if (e.key !== 'Tab') return;
+        const els = focusables();
+        if (!els.length) return;
+        const first = els[0], last = els[els.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
     document.addEventListener('click', (e) => {
         const buy = e.target.closest('[data-buy]');
         if (buy) openModal(buy);
