@@ -399,6 +399,14 @@ function initHero(canvas) {
     });
     visIO.observe(canvas);
 
+    visIO.observe(canvas);
+
+    /* pause the rAF loop when the tab is hidden to save battery/CPU */
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) { active = false; cancelAnimationFrame(raf); }
+        else if (!reduced) { active = true; clock.getDelta(); tick(); }
+    });
+
     const tick = () => {
         if (!active && !reduced) return;
         const dt = Math.min(clock.getDelta(), .05) || .016;
