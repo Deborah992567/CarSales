@@ -85,6 +85,12 @@
         if (buy) openModal(buy);
     });
     document.querySelectorAll('[data-buy]').forEach(b => b.setAttribute('aria-haspopup', 'dialog'));
+    /* icon-only buy buttons need a real accessible name + decorative SVG hidden */
+    document.querySelectorAll('.btn-icon[data-buy]').forEach(b => {
+        b.setAttribute('aria-label', 'Reserve ' + (b.dataset.buy || 'vehicle'));
+        const svg = b.querySelector('svg');
+        if (svg) svg.setAttribute('aria-hidden', 'true');
+    });
 
     /* exterior / interior view switch inside the modal */
     const viewBtns = document.querySelectorAll('.modal-view-btn');
