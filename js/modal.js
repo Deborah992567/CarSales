@@ -84,6 +84,7 @@
         const buy = e.target.closest('[data-buy]');
         if (buy) openModal(buy);
     });
+    document.querySelectorAll('[data-buy]').forEach(b => b.setAttribute('aria-haspopup', 'dialog'));
 
     /* exterior / interior view switch inside the modal */
     const viewBtns = document.querySelectorAll('.modal-view-btn');
