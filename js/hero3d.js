@@ -363,6 +363,18 @@ function initHero(canvas) {
 
     renderer.localClippingEnabled = true;
 
+    /* survive a WebGL context loss (mobile / low-memory GPU) without a frozen scene */
+    canvas.addEventListener('webglcontextlost', (e) => {
+        e.preventDefault();
+        active = false;
+        cancelAnimationFrame(raf);
+    }, false);
+    canvas.addEventListener('webglcontextrestored', () => {
+        active = true;
+        clock.getDelta();
+        if (!reduced) tick();
+    }, false);
+
     const clock = new THREE.Clock();
     let raf = 0;
     let active = true;
