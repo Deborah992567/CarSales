@@ -30,14 +30,16 @@
     const paySubmit = document.getElementById('paySubmit');
     const payBack = document.getElementById('payBack');
     const payFinish = document.getElementById('payFinish');
+    const payStatus = document.getElementById('payStatus');
 
     let lastTrigger = null;
     let payTimer = 0;
 
     const showStep = (name) => {
         Object.entries(paySteps).forEach(([k, el]) => { el.hidden = k !== name; });
-        const focusEl = { details: payName, card: payCard }[name];
+        const focusEl = { details: payName, card: payCard, spin: null, done: payFinish }[name];
         if (focusEl) setTimeout(() => focusEl.focus(), 120);
+        if (payStatus && name === 'done') payStatus.textContent = 'Order confirmed';
     };
 
     const openModal = (btn) => {
