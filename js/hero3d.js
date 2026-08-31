@@ -12,7 +12,7 @@ const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const DPR = Math.min(window.devicePixelRatio || 1, 2);
 const INTERIOR_SRC = 'image/interior/interior-5.webp';
 const CAR_GLB = 'lib/car.glb';
-const CAR_YAW = 0;   /* tweak to Math.PI if the car faces away from the camera */
+const CAR_YAW = Math.PI;   /* model's nose points -Z; flip to face the +Z camera */
 const CAR_HEIGHT = 1.7;
 
 /* choreography timing (seconds) */
