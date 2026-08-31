@@ -68,6 +68,9 @@ function initHero(canvas) {
     const hintEl = document.getElementById('carHint');
     if (hintEl && reduced) hintEl.classList.add('hide');
 
+    /* let the hint gently dismiss itself if the visitor never interacts */
+    const hintT = setTimeout(() => { if (hintEl) hintEl.classList.add('hide'); }, 9000);
+
     const renderer = makeRenderer(canvas);
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(40, innerWidth / innerHeight, .1, 200);
