@@ -48,6 +48,8 @@
         clearTimeout(payTimer);
         lastTrigger = btn;
         modalTitle.textContent = btn.dataset.buy;
+        if (modalImg) modalImg.alt = btn.dataset.buy + ' exterior';
+        if (modalImgInt) modalImgInt.alt = btn.dataset.buy + ' interior';
         modalPrice.textContent = btn.dataset.price.replace('$', '').replace(',', '');
         modalImg.src = btn.dataset.img;
         const int = btn.dataset.int;
