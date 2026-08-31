@@ -60,6 +60,7 @@ function loadTex(src) {
 function initHero(canvas) {
     if (!canvas) return null;
     const hintEl = document.getElementById('carHint');
+    if (hintEl && reduced) hintEl.classList.add('hide');
 
     const renderer = makeRenderer(canvas);
     const scene = new THREE.Scene();
