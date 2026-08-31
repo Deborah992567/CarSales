@@ -506,6 +506,13 @@ function initCTA(canvas) {
         if (active && !reduced) tick();
     });
     visIO.observe(canvas);
+
+    /* pause the rAF loop when the tab is hidden to save battery/CPU */
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) { active = false; cancelAnimationFrame(raf); }
+        else if (!reduced) { active = true; clock.getDelta(); tick(); }
+    });
+
     const clock = new THREE.Clock();
     const onResize = () => {
         const w = canvas.clientWidth, h = canvas.clientHeight;
