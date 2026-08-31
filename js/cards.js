@@ -43,8 +43,18 @@
     const resetBtn = document.getElementById('resetFilters');
     const cols = document.querySelectorAll('.col-card');
 
+    /* restore previously chosen filters for this browsing session */
+    try {
+        if (colorFilter && sessionStorage.getItem('carsng_col')) colorFilter.value = sessionStorage.getItem('carsng_col');
+        if (brandFilter && sessionStorage.getItem('carsng_brand')) brandFilter.value = sessionStorage.getItem('carsng_brand');
+    } catch (err) { /* storage unavailable — ignore */ }
+
     function filterCars() {
         const cf = colorFilter.value, bf = brandFilter.value;
+        try {
+            sessionStorage.setItem('carsng_col', cf);
+            sessionStorage.setItem('carsng_brand', bf);
+        } catch (err) { /* storage unavailable — ignore */ }
         let visible = 0;
         cols.forEach(el => {
             const c = el.dataset.color, b = el.dataset.brand;
@@ -66,4 +76,6 @@
     if (resetBtn) resetBtn.addEventListener('click', () => {
         colorFilter.value = 'all'; brandFilter.value = 'all'; filterCars();
     });
+
+    filterCars();   /* apply any restored filters on load */
 })();
