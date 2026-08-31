@@ -9,11 +9,17 @@ import * as THREE from '../lib/three.module.min.js';
 import { loadGLB } from '../lib/glb.js';
 
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const DPR = Math.min(window.devicePixelRatio || 1, 2);
 const INTERIOR_SRC = 'image/interior/interior-5.webp';
 const CAR_GLB = 'lib/car.glb';
 const CAR_YAW = Math.PI;   /* model's nose points -Z; flip to face the +Z camera */
 const CAR_HEIGHT = 1.7;
+
+/* perf tier — trim effects on low-memory / low-core devices so the
+   showroom stays smooth on modest phones */
+const ram = navigator.deviceMemory || 4;
+const cores = navigator.hardwareConcurrency || 4;
+const FAST = (ram >= 4 && cores >= 4) ? 1 : 0;
+const DPR2 = Math.min(window.devicePixelRatio || 1, FAST ? 2 : 1);
 
 /* choreography timing (seconds) */
 const T_HOVER = { dismantle: 1.15, assemble: 1.0, interior: 2.0, return: 1.15 };
@@ -30,8 +36,8 @@ function makeRenderer(canvas) {
     const r = new THREE.WebGLRenderer({
         canvas, alpha: true, antialias: true, powerPreference: 'high-performance',
     });
-    r.setPixelRatio(DPR);
-    r.shadowMap.enabled = true;
+    r.setPixelRatio(DPR2);
+    r.shadowMap.enabled = !!FAST;
     r.shadowMap.type = THREE.PCFSoftShadowMap;
     r.toneMapping = THREE.ACESFilmicToneMapping;
     r.toneMappingExposure = 1.15;
@@ -119,7 +125,7 @@ function initHero(canvas) {
     scene.add(floor);
 
     /* --- particle field --- */
-    const N = 620;
+    const N = FAST ? 620 : 300;
     const pos = new Float32Array(N * 3);
     const col = new Float32Array(N * 3);
     const accentA = new THREE.Color(0xff6b00);
@@ -145,7 +151,7 @@ function initHero(canvas) {
     scene.add(particles);
 
     /* starfield */
-    const SN = 700;
+    const SN = FAST ? 700 : 320;
     const spos = new Float32Array(SN * 3);
     for (let i = 0; i < SN; i++) {
         const th = Math.random() * Math.PI * 2;
