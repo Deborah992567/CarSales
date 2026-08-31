@@ -27,6 +27,7 @@
     const payExp = document.getElementById('payExp');
     const payCvc = document.getElementById('payCvc');
     const payOrderNo = document.getElementById('payOrderNo');
+    const payAmount = document.getElementById('payAmount');
     const payNext = document.getElementById('payNext');
     const paySubmit = document.getElementById('paySubmit');
     const payBack = document.getElementById('payBack');
@@ -122,6 +123,8 @@
     if (modalConfirm) modalConfirm.addEventListener('click', () => {
         if (!modalPay || !payCar) return;
         payCar.textContent = modalTitle.textContent;
+        const price = parseInt(modalPrice.textContent.replace(/,/g, ''), 10) || 0;
+        if (payAmount) payAmount.textContent = '$' + Math.round(price * 0.1).toLocaleString();
         modalConfirm.style.display = 'none';
         modalPay.hidden = false;
         showStep('details');
