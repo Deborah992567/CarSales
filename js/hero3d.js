@@ -177,8 +177,12 @@ function initHero(canvas) {
             g.rotation.y = CAR_YAW;
             group.add(g);
             carFilled = true;
+            console.log('[Cars NG] hero model loaded:', ms.length, 'meshes');
         })
-        .catch(() => buildFallbackCar());
+        .catch((e) => {
+            console.warn('[Cars NG] GLB failed, using fallback:', e.message);
+            buildFallbackCar();
+        });
 
     function buildFallbackCar() {
         const mat = new THREE.MeshPhysicalMaterial({
