@@ -41,7 +41,11 @@
         Object.entries(paySteps).forEach(([k, el]) => { el.hidden = k !== name; });
         const focusEl = { details: payName, card: payCard, spin: null, done: payFinish }[name];
         if (focusEl) setTimeout(() => focusEl.focus(), 120);
-        if (payStatus && name === 'done') payStatus.textContent = 'Order confirmed';
+        if (payStatus) {
+            if (name === 'spin') payStatus.textContent = 'Authorising reservation…';
+            else if (name === 'done') payStatus.textContent = 'Reservation confirmed.';
+            else payStatus.textContent = '';
+        }
     };
 
     const openModal = (btn) => {
