@@ -339,7 +339,11 @@ function initHero(canvas) {
             phase = 'idle'; tPhase = 0;
             if (interior) { interior.visible = false; interior.material.opacity = 0; }
             choreoTearDown();
-            if (hintEl) hintEl.classList.remove('hide');
+            /* only nudge with the hint the first time in this session */
+            if (hintEl && !sessionStorage.getItem('carsng_toured')) {
+                hintEl.classList.remove('hide');
+                sessionStorage.setItem('carsng_toured', '1');
+            }
         }
     };
 
