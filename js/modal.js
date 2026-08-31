@@ -131,7 +131,7 @@
     if (payCard) payCard.addEventListener('input', () => { payCard.value = formatCard(payCard.value); });
     if (payExp) payExp.addEventListener('input', () => { payExp.value = formatExp(payExp.value); });
 
-    if (modalConfirm) modalConfirm.addEventListener('click', () => {
+    const beginCheckout = () => {
         if (!modalPay || !payCar) return;
         payCar.textContent = modalTitle.textContent;
         const price = parseInt(modalPrice.textContent.replace(/,/g, ''), 10) || 0;
@@ -139,6 +139,13 @@
         modalConfirm.style.display = 'none';
         modalPay.hidden = false;
         showStep('details');
+    };
+    if (modalConfirm) modalConfirm.addEventListener('click', beginCheckout);
+    const mediaEl = document.querySelector('.modal-panel__media');
+    if (mediaEl) mediaEl.addEventListener('click', (e) => {
+        if (e.target.closest('.modal-view-btn')) return;   /* let the view toggle handle its own click */
+        if (!modalPay.hidden && modalConfirm.style.display === 'none') return;
+        beginCheckout();
     });
 
     if (payNext) payNext.addEventListener('click', () => {
