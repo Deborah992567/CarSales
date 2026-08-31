@@ -33,14 +33,18 @@ reveal its **real interior** before you commit.
 - **3D tilt cards** — cursor-tracking perspective tilt with a soft orange glare.
 - **Live filtering** — colour / brand filter combined, with an ARIA-live count
   and an empty state.
-- **Buy flow** — reservation modal with vehicle details; keyboard-accessible
-  with focus return.
+- **Buy flow** — reservation modal with vehicle details, an exterior/interior
+  viewer, and a simulated checkout (name/email, card, authorisation spinner,
+  deposit calculated from each vehicle's price). Dialogue, focus-trapped and
+  keyboard-accessible with focus return.
 - **Showroom extras** — testimonials, gallery strip, animated stats, FAQ
   accordion, highlighted CTA banner, contact form, newsletter and footer.
 - **Performance & a11y** — CSS is modularised (`@import` chain), JS is split
   into small classic scripts + one ESM module; lazy images, WebP, preloads,
   `content-visibility`, fetch priority, print stylesheet, skip-link, semantic
-  landmarks and accessible focus states.
+  landmarks and accessible focus states. The host's device memory is used to
+  trim 3D effects on low-end hardware, and the render loops pause when the tab
+  is hidden.
 
 ## Tech
 
