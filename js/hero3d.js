@@ -252,7 +252,7 @@ function initHero(canvas) {
     const pointer = onPointer();
     const ray = new THREE.Raycaster();
     const ndc = new THREE.Vector2();
-    const sphere = new THREE.Sphere(new THREE.Vector3(0, .9, 0), 3.4);
+    const sphere = new THREE.Sphere(new THREE.Vector3(0, .9, 0), 4.0);
 
     const startShow = () => {
         if (reduced || phase !== 'idle') return;
@@ -495,5 +495,9 @@ function initCTA(canvas) {
     };
 }
 
-safe(() => initHero(document.getElementById('scene')));
+const hero = safe(() => initHero(document.getElementById('scene')));
+if (!hero) {
+    document.body.classList.add('no-3d');
+    if (window.VELOCITY_DEBUG) console.log('[Cars NG] WebGL unavailable — showing static hero.');
+}
 safe(() => initCTA(document.getElementById('ctaScene')));

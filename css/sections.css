@@ -33,6 +33,14 @@
 }
 @keyframes livePulse{ 0%{ box-shadow:0 0 0 0 rgba(255,107,0,.5); } 70%{ box-shadow:0 0 0 9px rgba(255,107,0,0); } 100%{ box-shadow:0 0 0 0 rgba(255,107,0,0); } }
 
+/* graceful static hero when WebGL is unavailable */
+.no-3d .hero{
+    background:
+        linear-gradient(rgba(255,253,250,.9), rgba(246,241,234,.94)),
+        url('../image/pexels-tiwi-riders-1256368688-25819740.webp') center/cover no-repeat;
+}
+.no-3d .hero #scene{ display:none; }
+
 .hero__title{
     font-family:var(--font-d); font-weight:700;
     font-size:clamp(3rem, 8.5vw, 7rem); line-height:.98; letter-spacing:-.02em;
