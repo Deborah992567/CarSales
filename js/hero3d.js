@@ -343,6 +343,15 @@ function initHero(canvas) {
         if (ray.ray.intersectsSphere(sphere)) startShow();
     };
 
+    /* tap / click also starts the tour — handy where there is no hover (touch) */
+    const tapShow = (e) => {
+        if (reduced || phase !== 'idle') return;
+        ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+        ray.setFromCamera(ndc, camera);
+        if (ray.ray.intersectsSphere(sphere)) startShow();
+    };
+    canvas.addEventListener('pointerdown', tapShow);
+
     /* --- interaction / resize --- */
     const onResize = () => {
         camera.aspect = innerWidth / innerHeight;
