@@ -358,6 +358,11 @@ function initHero(canvas) {
     };
     canvas.addEventListener('pointerdown', tapShow);
 
+    /* keyboard: Enter / Space on the focusable canvas starts the tour */
+    canvas.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); startShow(); }
+    });
+
     /* --- interaction / resize --- */
     const onResize = () => {
         camera.aspect = innerWidth / innerHeight;
