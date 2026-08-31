@@ -272,6 +272,19 @@
 .modal-close:hover{ background:var(--accent); border-color:transparent; color:#fff; transform:rotate(90deg); }
 .modal-panel__media{ position:relative; min-height:320px; overflow:hidden; }
 .modal-panel__media img{ width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
+.modal-panel__media img.is-hidden{ display:none; }
+.modal-panel__view{
+    position:absolute; top:14px; right:14px; z-index:2;
+    display:flex; gap:.35rem; padding:.3rem; border-radius:999px;
+    background:rgba(24,34,48,.55); backdrop-filter:blur(6px);
+}
+.modal-view-btn{
+    border:0; background:transparent; color:#fff; font-size:.68rem;
+    letter-spacing:.14em; text-transform:uppercase; padding:.35rem .7rem;
+    border-radius:999px; cursor:pointer; transition:background .2s ease, color .2s ease;
+}
+.modal-view-btn:hover{ color:var(--accent); }
+.modal-view-btn.is-active{ background:var(--accent); color:#fff; }
 .modal-panel__tap{
     position:absolute; left:0; right:0; bottom:14px; text-align:center;
     font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:#fff;

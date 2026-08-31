@@ -8,6 +8,7 @@
     const backdrop = document.getElementById('modalBackdrop');
     const closeBtn = document.getElementById('modalClose');
     const modalImg = document.getElementById('modalImg');
+    const modalImgInt = document.getElementById('modalImgInt');
     const modalTitle = document.getElementById('modalTitle');
     const modalPrice = document.getElementById('modalPrice');
     const modalConfirm = document.getElementById('modalConfirm');
@@ -49,6 +50,14 @@
         modalTitle.textContent = btn.dataset.buy;
         modalPrice.textContent = btn.dataset.price.replace('$', '').replace(',', '');
         modalImg.src = btn.dataset.img;
+        const int = btn.dataset.int;
+        if (modalImgInt) {
+            modalImgInt.src = int || '';
+            modalImgInt.classList.toggle('is-hidden', !int);
+            document.querySelectorAll('.modal-view-btn').forEach(b => {
+                b.classList.toggle('is-active', b.dataset.view === 'ext');
+            });
+        }
         backdrop.classList.add('open');
         document.body.style.overflow = 'hidden';
         if (modalPay) modalPay.hidden = true;
@@ -72,6 +81,16 @@
         const buy = e.target.closest('[data-buy]');
         if (buy) openModal(buy);
     });
+
+    /* exterior / interior view switch inside the modal */
+    const viewBtns = document.querySelectorAll('.modal-view-btn');
+    viewBtns.forEach(btn => btn.addEventListener('click', () => {
+        const showInt = btn.dataset.view === 'int';
+        if (!showInt && !modalImgInt) return;
+        viewBtns.forEach(b => b.classList.toggle('is-active', b === btn));
+        if (modalImg) modalImg.classList.toggle('is-hidden', showInt);
+        if (modalImgInt) modalImgInt.classList.toggle('is-hidden', !showInt);
+    }));
 
     const closeModal = () => {
         if (!backdrop) return;

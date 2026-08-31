@@ -841,6 +841,11 @@
             <button class="modal-close" id="modalClose">✕</button>
             <div class="modal-panel__media">
                 <img id="modalImg" src="" alt="Vehicle">
+                <img id="modalImgInt" src="" alt="Vehicle interior" class="is-hidden">
+                <div class="modal-panel__view" role="group" aria-label="View switcher">
+                    <button type="button" class="modal-view-btn is-active" data-view="ext">Exterior</button>
+                    <button type="button" class="modal-view-btn" data-view="int">Interior</button>
+                </div>
                 <div class="modal-panel__tap"><span class="tap-dot"></span> Tap anywhere to continue</div>
             </div>
             <div class="modal-panel__body">
