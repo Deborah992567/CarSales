@@ -1,0 +1,20 @@
+# Binary assets — keep git from treating these as text
+lib/car.glb binary
+image/**/*.webp binary
+image/**/*.jpg binary
+favicon.svg text
+*.webmanifest text
+
+# Common text types
+*.js text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.md text
+*.json text
+*.xml text
+*.svg text
+
+# Mark vendored third-party files as linguist-vendored to keep repo stats honest
+lib/*.js linguist-vendored
+lib/draco/*.js linguist-vendored
+bootstrap/** linguist-vendored
