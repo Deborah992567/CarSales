@@ -144,11 +144,15 @@
     if (payCard) payCard.addEventListener('input', () => { payCard.value = formatCard(payCard.value); });
     if (payExp) payExp.addEventListener('input', () => { payExp.value = formatExp(payExp.value); });
 
+    const depositFor = () => {
+        const price = parseInt((modalPrice.textContent || '0').replace(/,/g, ''), 10) || 0;
+        return '$' + Math.round(price * 0.1).toLocaleString();
+    };
+
     const beginCheckout = () => {
         if (!modalPay || !payCar) return;
         payCar.textContent = modalTitle.textContent;
-        const price = parseInt(modalPrice.textContent.replace(/,/g, ''), 10) || 0;
-        if (payAmount) payAmount.textContent = '$' + Math.round(price * 0.1).toLocaleString();
+        if (payAmount) payAmount.textContent = depositFor();
         modalConfirm.style.display = 'none';
         modalPay.hidden = false;
         showStep('details');
@@ -189,7 +193,7 @@
 
     const showReceipt = (method) => {
         const ref = 'NG-' + Math.floor(100000 + Math.random() * 899999);
-        const total = payAmount.textContent;
+        const total = depositFor();
         const lead = document.getElementById('receiptLead');
         if (lead) lead.textContent = total;
         payOrderNo.textContent = ref;
