@@ -33,6 +33,8 @@
     const payBack = document.getElementById('payBack');
     const payFinish = document.getElementById('payFinish');
     const payStatus = document.getElementById('payStatus');
+    const payPayPal = document.getElementById('payPayPal');
+    const payApple = document.getElementById('payApple');
 
     let lastTrigger = null;
     let payTimer = 0;
@@ -177,6 +179,32 @@
     });
 
     if (payFinish) payFinish.addEventListener('click', closeModal);
+
+    /* wallet payments (PayPal / Apple Pay) reuse the authorisation flow */
+    if (payPayPal) payPayPal.addEventListener('click', () => {
+        if (!payName.value.trim() || !payEmail.checkValidity()) {
+            payName.reportValidity();
+            payEmail.reportValidity();
+            return;
+        }
+        showStep('spin');
+        payTimer = setTimeout(() => {
+            payOrderNo.textContent = 'NG-' + Math.floor(100000 + Math.random() * 899999);
+            showStep('done');
+        }, 1900);
+    });
+    if (payApple) payApple.addEventListener('click', () => {
+        if (!payName.value.trim() || !payEmail.checkValidity()) {
+            payName.reportValidity();
+            payEmail.reportValidity();
+            return;
+        }
+        showStep('spin');
+        payTimer = setTimeout(() => {
+            payOrderNo.textContent = 'NG-' + Math.floor(100000 + Math.random() * 899999);
+            showStep('done');
+        }, 1900);
+    });
 
     /* ---------- Enquiry form ---------- */
     const form = document.getElementById('contactForm');
