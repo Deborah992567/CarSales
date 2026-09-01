@@ -369,6 +369,14 @@
     background:var(--grad); box-shadow:0 12px 30px -12px rgba(255,107,0,.7);
     animation:pop .5s var(--ease-out);
 }
+.receipt{
+    position:relative; overflow:hidden; text-align:left;
+    background:#fff; border:1px solid var(--line-2); border-radius:16px;
+    padding:1.2rem 1.2rem 1rem; margin:0 0 1rem;
+}
+.receipt__head{ display:flex; gap:.7rem; align-items:center; margin-bottom:.9rem; }
+.receipt__head strong{ font-family:var(--font-d); font-size:1rem; display:block; color:var(--text); }
+.receipt__head span{ font-size:.72rem; color:var(--muted); letter-spacing:.04em; }
 @keyframes pop{ from{ transform:scale(.4); opacity:0; } to{ transform:scale(1); opacity:1; } }
 .pay__step--done{ text-align:center; }
 .pay__step--done .pay__lede{ text-align:center; }
