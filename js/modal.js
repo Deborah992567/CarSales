@@ -204,24 +204,17 @@
     if (payFinish) payFinish.addEventListener('click', closeModal);
 
     /* wallet payments (PayPal / Apple Pay) reuse the authorisation flow */
-    if (payPayPal) payPayPal.addEventListener('click', () => {
+    const walletPay = (method) => {
         if (!payName.value.trim() || !payEmail.checkValidity()) {
             payName.reportValidity();
             payEmail.reportValidity();
             return;
         }
         showStep('spin');
-        payTimer = setTimeout(() => showReceipt('PayPal'), 1900);
-    });
-    if (payApple) payApple.addEventListener('click', () => {
-        if (!payName.value.trim() || !payEmail.checkValidity()) {
-            payName.reportValidity();
-            payEmail.reportValidity();
-            return;
-        }
-        showStep('spin');
-        payTimer = setTimeout(() => showReceipt('Apple Pay'), 1900);
-    });
+        payTimer = setTimeout(() => showReceipt(method), 1900);
+    };
+    if (payPayPal) payPayPal.addEventListener('click', () => walletPay('PayPal'));
+    if (payApple) payApple.addEventListener('click', () => walletPay('Apple Pay'));
 
     /* receipt actions */
     const receiptPrint = document.getElementById('receiptPrint');
