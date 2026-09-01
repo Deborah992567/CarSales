@@ -182,7 +182,8 @@
             return;
         }
         showStep('spin');
-        payTimer = setTimeout(() => showReceipt('Card'), 1900);
+        const brand = /^4/.test(card) ? 'Visa' : /^5[1-5]/.test(card) ? 'Mastercard' : /^3[47]/.test(card) ? 'Amex' : 'Card';
+        payTimer = setTimeout(() => showReceipt(brand + ' ·••• ' + card.slice(-4)), 1900);
     });
 
     const showReceipt = (method) => {
