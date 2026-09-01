@@ -351,6 +351,11 @@
 .pay__wallet--paypal:hover{ border-color:#003087; color:#003087; }
 .pay__wallet--apple{ background:#000; color:#fff; border-color:#000; }
 .pay__wallet--apple:hover{ background:#1c1c1e; }
+.pay__divider{
+    display:flex; align-items:center; gap:.8rem; margin:.6rem 0;
+    color:var(--muted); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
+}
+.pay__divider::before, .pay__divider::after{ content:""; flex:1; height:1px; background:var(--line-2); }
 .pay__spinner{
     width:44px; height:44px; margin:1.2rem auto .9rem; border-radius:50%;
     border:3px solid var(--line-2); border-top-color:var(--accent);
