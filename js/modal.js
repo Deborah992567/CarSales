@@ -19,6 +19,7 @@
         card: document.getElementById('payStepCard'),
         spin: document.getElementById('payStepSpin'),
         done: document.getElementById('payStepDone'),
+        receipt: document.getElementById('payStepReceipt'),
     };
     const payCar = document.getElementById('payCar');
     const payName = document.getElementById('payName');
@@ -35,6 +36,15 @@
     const payStatus = document.getElementById('payStatus');
     const payPayPal = document.getElementById('payPayPal');
     const payApple = document.getElementById('payApple');
+    const receiptOrderNo = document.getElementById('receiptOrderNo');
+    const rRef = document.getElementById('rRef');
+    const rDate = document.getElementById('rDate');
+    const rMethod = document.getElementById('rMethod');
+    const rName = document.getElementById('rName');
+    const rEmail = document.getElementById('rEmail');
+    const rCar = document.getElementById('rCar');
+    const rTotal = document.getElementById('rTotal');
+    const receiptWm = document.getElementById('receiptWm');
 
     let lastTrigger = null;
     let payTimer = 0;
@@ -172,11 +182,24 @@
             return;
         }
         showStep('spin');
-        payTimer = setTimeout(() => {
-            payOrderNo.textContent = 'NG-' + Math.floor(100000 + Math.random() * 899999);
-            showStep('done');
-        }, 1900);
+        payTimer = setTimeout(() => showReceipt('Card'), 1900);
     });
+
+    const showReceipt = (method) => {
+        const ref = 'NG-' + Math.floor(100000 + Math.random() * 899999);
+        const total = payAmount.textContent;
+        payOrderNo.textContent = ref;
+        if (receiptOrderNo) receiptOrderNo.textContent = ref;
+        if (rRef) rRef.textContent = ref;
+        if (rDate) rDate.textContent = new Date().toLocaleString();
+        if (rMethod) rMethod.textContent = method;
+        if (rName) rName.textContent = payName.value.trim() || '—';
+        if (rEmail) rEmail.textContent = payEmail.value.trim() || '—';
+        if (rCar) rCar.textContent = payCar.textContent || '—';
+        if (rTotal) rTotal.textContent = total;
+        if (receiptWm) receiptWm.textContent = 'CARS NG · ' + ref;
+        showStep('receipt');
+    };
 
     if (payFinish) payFinish.addEventListener('click', closeModal);
 
@@ -188,10 +211,7 @@
             return;
         }
         showStep('spin');
-        payTimer = setTimeout(() => {
-            payOrderNo.textContent = 'NG-' + Math.floor(100000 + Math.random() * 899999);
-            showStep('done');
-        }, 1900);
+        payTimer = setTimeout(() => showReceipt('PayPal'), 1900);
     });
     if (payApple) payApple.addEventListener('click', () => {
         if (!payName.value.trim() || !payEmail.checkValidity()) {
@@ -200,10 +220,7 @@
             return;
         }
         showStep('spin');
-        payTimer = setTimeout(() => {
-            payOrderNo.textContent = 'NG-' + Math.floor(100000 + Math.random() * 899999);
-            showStep('done');
-        }, 1900);
+        payTimer = setTimeout(() => showReceipt('Apple Pay'), 1900);
     });
 
     /* ---------- Enquiry form ---------- */
