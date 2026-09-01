@@ -51,11 +51,12 @@
 
     const showStep = (name) => {
         Object.entries(paySteps).forEach(([k, el]) => { el.hidden = k !== name; });
-        const focusEl = { details: payName, card: payCard, spin: null, done: payFinish }[name];
+        const focusEl = { details: payName, card: payCard, spin: null, done: payFinish, receipt: receiptOrderNo }[name];
         if (focusEl) setTimeout(() => focusEl.focus(), 120);
         if (payStatus) {
             if (name === 'spin') payStatus.textContent = 'Authorising reservation…';
             else if (name === 'done') payStatus.textContent = 'Reservation confirmed.';
+            else if (name === 'receipt') payStatus.textContent = 'Payment successful. Receipt ready to print.';
             else payStatus.textContent = '';
         }
     };
