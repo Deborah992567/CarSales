@@ -377,6 +377,15 @@
 .receipt__head{ display:flex; gap:.7rem; align-items:center; margin-bottom:.9rem; }
 .receipt__head strong{ font-family:var(--font-d); font-size:1rem; display:block; color:var(--text); }
 .receipt__head span{ font-size:.72rem; color:var(--muted); letter-spacing:.04em; }
+.receipt__head svg{ color:var(--accent); }
+.receipt__wm{
+    position:absolute; inset:0; display:grid; place-items:center;
+    font-family:var(--font-d); font-weight:800; font-size:3.2rem;
+    letter-spacing:.18em; color:var(--accent); opacity:.08;
+    transform:rotate(-18deg); pointer-events:none; user-select:none;
+    text-align:center; line-height:1.1; padding:.5rem; white-space:normal; word-spacing:.4rem;
+}
+.receipt__fine{ position:relative; font-size:.7rem; color:var(--muted); text-align:center; margin:.7rem 0 0; }
 @keyframes pop{ from{ transform:scale(.4); opacity:0; } to{ transform:scale(1); opacity:1; } }
 .pay__step--done{ text-align:center; }
 .pay__step--done .pay__lede{ text-align:center; }
