@@ -403,6 +403,11 @@
 .pay__step--done{ text-align:center; }
 .pay__step--done .pay__lede{ text-align:center; }
 @media (max-width: 480px){ .pay__row{ grid-template-columns:1fr; gap:0; } }
+@media (max-width:480px){
+    .receipt{ padding:1rem; }
+    .receipt__wm{ font-size:2.4rem; }
+    .receipt__rows > div{ font-size:.78rem; }
+}
 @media (max-width:768px){
     .modal-panel{ grid-template-columns:1fr; }
     .modal-panel__media{ min-height:240px; padding-top:56.25%; }
