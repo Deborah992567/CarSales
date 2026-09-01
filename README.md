@@ -24,10 +24,12 @@ reveal its **real interior** before you commit.
   hover performs a 5-second sequence — dismantle → assemble → interior cutaway
   → exterior — with camera dollies and x-ray material fades. Mouse parallax +
   idle float; pauses when off-screen.
-- **Simulated checkout** — confirm a reservation, then run a card through a
-  two-step payment UI (with auto-formatting card number / expiry inputs), watch
-  the authorisation spinner, and collect an order reference. Nothing is ever
-  charged.
+- **Simulated checkout** — confirm a reservation, then pay with a card,
++  **PayPal** or **Apple Pay** (auto-formatting card number / expiry inputs),
++  watch the authorisation spinner, and collect an order reference. A
++  **watermarked receipt** is generated with your booking reference, deposit,
++  payment method and details — printable via the print stylesheet. Nothing is
++  ever charged.
 - **Interior reveal on hover / tap** — each of the 9 cards swaps in real cabin
   photography with a ken-burns zoom and a `360° interior` chip.
 - **3D tilt cards** — cursor-tracking perspective tilt with a soft orange glare.
