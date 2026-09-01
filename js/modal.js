@@ -188,6 +188,8 @@
     const showReceipt = (method) => {
         const ref = 'NG-' + Math.floor(100000 + Math.random() * 899999);
         const total = payAmount.textContent;
+        const lead = document.getElementById('receiptLead');
+        if (lead) lead.textContent = total;
         payOrderNo.textContent = ref;
         if (receiptOrderNo) receiptOrderNo.textContent = ref;
         if (rRef) rRef.textContent = ref;

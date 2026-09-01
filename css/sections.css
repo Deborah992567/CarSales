@@ -397,6 +397,8 @@
 .receipt__rows .receipt__total{ border-bottom:0; padding-top:.5rem; align-items:baseline; }
 .receipt__total dt{ font-size:.74rem; letter-spacing:.1em; text-transform:uppercase; }
 .receipt__total dd{ font-family:var(--font-d); font-size:1.15rem; color:var(--accent); }
+.pay__step--receipt__body{ text-align:center; }
+.pay__step--receipt__body .pay__lede{ text-align:center; }
 @keyframes pop{ from{ transform:scale(.4); opacity:0; } to{ transform:scale(1); opacity:1; } }
 .pay__step--done{ text-align:center; }
 .pay__step--done .pay__lede{ text-align:center; }
