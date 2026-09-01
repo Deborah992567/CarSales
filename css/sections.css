@@ -386,6 +386,17 @@
     text-align:center; line-height:1.1; padding:.5rem; white-space:normal; word-spacing:.4rem;
 }
 .receipt__fine{ position:relative; font-size:.7rem; color:var(--muted); text-align:center; margin:.7rem 0 0; }
+.receipt__rows{ position:relative; margin:0; }
+.receipt__rows > div{
+    display:flex; justify-content:space-between; gap:.8rem;
+    padding:.34rem 0; font-size:.82rem;
+    border-bottom:1px dashed var(--line-2);
+}
+.receipt__rows dt{ color:var(--muted); }
+.receipt__rows dd{ text-align:right; font-weight:600; margin:0; color:var(--text); }
+.receipt__rows .receipt__total{ border-bottom:0; padding-top:.5rem; align-items:baseline; }
+.receipt__total dt{ font-size:.74rem; letter-spacing:.1em; text-transform:uppercase; }
+.receipt__total dd{ font-family:var(--font-d); font-size:1.15rem; color:var(--accent); }
 @keyframes pop{ from{ transform:scale(.4); opacity:0; } to{ transform:scale(1); opacity:1; } }
 .pay__step--done{ text-align:center; }
 .pay__step--done .pay__lede{ text-align:center; }
