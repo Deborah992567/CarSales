@@ -223,6 +223,10 @@
         payTimer = setTimeout(() => showReceipt('Apple Pay'), 1900);
     });
 
+    /* receipt actions */
+    const receiptPrint = document.getElementById('receiptPrint');
+    if (receiptPrint) receiptPrint.addEventListener('click', () => window.print());
+
     /* ---------- Enquiry form ---------- */
     const form = document.getElementById('contactForm');
     if (form) form.addEventListener('submit', (e) => {
