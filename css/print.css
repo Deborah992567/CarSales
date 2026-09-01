@@ -24,4 +24,30 @@
     .card-title, .car-card__title{ color:#111; }
     .spec-bar__track i{ width:var(--w,60%) !important; background:#333; }
     a[href^="http"]::after{ content:" (" attr(href) ")"; font-size:.7em; color:#555; }
+
+    /* print only the receipt on its own page */
+    .modal-backdrop{
+        display:block !important; position:static !important; inset:auto !important;
+        background:#fff !important; padding:0 !important; overflow:visible !important;
+    }
+    .modal-backdrop.open{ animation:none !important; }
+    .modal-panel{
+        grid-template-columns:1fr !important; max-width:100% !important;
+        width:100% !important; max-height:none !important; overflow:visible !important;
+        border:0 !important; box-shadow:none !important;
+    }
+    .modal-panel__media, .modal-panel__view, .modal-panel__tap,
+    .modal-panel__steps, .modal-close, .modal-panel__body > h3,
+    .modal-panel__price, .modal-panel__body > .btn-glow,
+    .pay__step--details, .pay__step--card, .pay__step--spin, .pay__step--done,
+    #payStepReceipt .pay__title, #receiptPrint, #receiptBack{
+        display:none !important;
+    }
+    .modal-panel__pay{ display:block !important; border:0 !important; margin:0 !important; padding:0 !important; }
+    .pay__step--receipt{ display:block !important; }
+    .pay__divider{ display:none !important; }
+    .receipt{ border:1px solid #999; padding:1.5rem; }
+    .receipt__wm{ opacity:.1 !important; }
+    .receipt__rows dt{ color:#333 !important; }
+    .receipt__rows dd{ color:#000 !important; }
 }
