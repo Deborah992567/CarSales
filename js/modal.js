@@ -36,7 +36,6 @@
     const payStatus = document.getElementById('payStatus');
     const payPayPal = document.getElementById('payPayPal');
     const payApple = document.getElementById('payApple');
-    const receiptOrderNo = document.getElementById('receiptOrderNo');
     const rRef = document.getElementById('rRef');
     const rDate = document.getElementById('rDate');
     const rMethod = document.getElementById('rMethod');
