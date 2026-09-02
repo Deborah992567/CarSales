@@ -230,7 +230,7 @@
     const receiptPrint = document.getElementById('receiptPrint');
     if (receiptPrint) receiptPrint.addEventListener('click', () => window.print());
     const receiptBack = document.getElementById('receiptBack');
-    if (receiptBack) receiptBack.addEventListener('click', () => showStep('card'));
+    if (receiptBack) receiptBack.addEventListener('click', () => showStep('details'));
 
     /* ---------- Enquiry form ---------- */
     const form = document.getElementById('contactForm');
