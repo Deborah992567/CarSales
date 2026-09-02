@@ -124,6 +124,14 @@
         backdrop.classList.remove('open');
         document.body.style.overflow = '';
         if (lastTrigger) lastTrigger.focus();
+        /* reset payment form so stale values don't leak */
+        if (modalPay) modalPay.hidden = true;
+        if (modalConfirm) modalConfirm.style.display = '';
+        if (payName) payName.value = '';
+        if (payEmail) payEmail.value = '';
+        if (payCard) payCard.value = '';
+        if (payExp) payExp.value = '';
+        if (payCvc) payCvc.value = '';
     };
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     if (backdrop) backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeModal(); });
