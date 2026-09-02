@@ -349,9 +349,17 @@
 }
 .pay__wallet svg{ width:20px; height:20px; }
 .pay__wallet:hover{ transform:translateY(-2px); box-shadow:0 12px 24px -16px rgba(24,34,48,.4); }
-.pay__wallet--paypal:hover{ border-color:#003087; color:#003087; }
+.pay__wallet--paypal{ background:#fff; }
+.pay__wallet--paypal:hover{ border-color:#003087; }
 .pay__wallet--apple{ background:#000; color:#fff; border-color:#000; }
 .pay__wallet--apple:hover{ background:#1c1c1e; }
+.pay__wallet-row{
+    display:grid; grid-template-columns:1fr 1fr; gap:.7rem; margin:.2rem 0 .3rem;
+}
+.pay__wallet-row .pay__wallet{ margin-bottom:0; }
+.pay__wallet-hint{
+    text-align:center; font-size:.74rem; color:var(--muted); margin:.1rem 0 .4rem;
+}
 .pay__divider{
     display:flex; align-items:center; gap:.8rem; margin:.6rem 0;
     color:var(--muted); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
@@ -408,6 +416,7 @@
     .receipt{ padding:1rem; }
     .receipt__wm{ font-size:2.4rem; }
     .receipt__rows > div{ font-size:.78rem; }
+    .pay__wallet-row{ grid-template-columns:1fr; }
 }
 @media (max-width:768px){
     .modal-panel{ grid-template-columns:1fr; }

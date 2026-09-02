@@ -886,13 +886,31 @@
                                 <input class="pay-input" id="payEmail" type="email" autocomplete="email" inputmode="email" placeholder="you@mail.com" required>
                             </label>
                         </div>
+
+                        <div class="pay__wallet-row">
+                            <button class="pay__wallet pay__wallet--paypal" id="payPayPal" type="button" aria-label="Pay with PayPal">
+                                <svg viewBox="0 0 32 32" width="20" height="20" aria-hidden="true" focusable="false">
+                                    <path fill="#003087" d="M23.6 5.04H12.36a1.4 1.4 0 0 0-1.38 1.19l-2.05 13.02a.78.78 0 0 0 .77.9h3.02l.76-4.82a.85.85 0 0 1 .84-.72h1.94c1.98 0 3.54-.81 3.9-2.16.1-.37.17-.73.2-1.08.13-.85-.15-1.68-.6-2.18.23-.74.1-1.6-.53-2.2a4.2 4.2 0 0 0-2.97-.95H25.3a2.32 2.32 0 0 0-.07-.2c-.2-.63-.77-1.1-1.98-1.1z"/>
+                                    <path fill="#0070E0" d="M23.07 6.97h-1.9a.9.9 0 0 0-.89.77l-2.05 12.98a.5.5 0 0 0 .5.58h1.83a.9.9 0 0 0 .89-.77l.62-3.94a.9.9 0 0 1 .89-.77h.36c1.63 0 2.41-.55 2.61-1.74.09-.58.1-1.08-.03-1.5-.37-1.21-1.53-1.63-3.18-1.63h-.3a.54.54 0 0 1-.53-.46l-.15-.95a.36.36 0 0 1 .35-.42h1.31a.36.36 0 0 1 .35.27.35.35 0 0 0 .34.27h1.06a1.66 1.66 0 0 0 1.26-.57.7.7 0 0 0 .16-.46.6.6 0 0 0-.14-.45h-.53c-.24-.7-1.8-1.12-3.42-1.12z"/>
+                                </svg>
+                                PayPal
+                            </button>
+                            <button class="pay__wallet pay__wallet--apple" id="payApple" type="button" aria-label="Pay with Apple Pay">
+                                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                                Apple Pay
+                            </button>
+                        </div>
+                        <p class="pay__wallet-hint">Pay instantly with a wallet — no card or details required.</p>
+
+                        <div class="pay__divider"><span>or pay by card</span></div>
+
                         <button class="btn-glow w-100" id="payNext"><span>Continue to payment</span></button>
-                        <p class="pay__fine">Simulated checkout — no real card is ever charged.</p>
+                        <p class="pay__fine">Simulated checkout — no real charge. Card users continue below.</p>
                     </div>
 
                     <div class="pay__step pay__step--card" id="payStepCard" hidden>
                         <h4 class="pay__title">Payment details</h4>
-                        <p class="pay__lede">Simulated payment — add a card, or use PayPal / Apple Pay above.</p>
+                        <p class="pay__lede">Enter your test card details to complete the payment.</p>
                         <label class="pay-field">Card number
                             <input class="pay-input pay-input--card" id="payCard" inputmode="numeric" autocomplete="cc-number" maxlength="19" placeholder="1234 5678 9012 3456" required>
                         </label>
@@ -908,19 +926,6 @@
                             <span>Deposit</span>
                             <strong class="grad-text" id="payAmount">$2,000</strong>
                         </div>
-
-                        <div class="pay__divider"><span>or pay with</span></div>
-
-                        <button class="pay__wallet pay__wallet--paypal" id="payPayPal" type="button" aria-label="Pay with PayPal">
-                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M7.08 20.4 7.5 18l.1-.5H10l.1-.4h-1.2l.3-1.2c.05-.2.1-.4.2-.6h1.9l.1-.3H8.8l-.7 2.9c-.02 0-.05 0-.07 0-.9 0-1.6.7-1.6 1.6 0 .3.08.5.25.5h.57zm13.7-8.2c-.4-1.6-1.6-2.4-3.6-2.4h-1.3l.12-.6H18l.05-.3c.02-.1 0-.2 0-.3h-4.9c-.1 0-.2 0-.2.1l-.3 1.7-.1.6c-.06.4-.1.9-.1 1.3h-1.4l-.34 1.8h1.9c.07-.05.15-.1.15-.2l.1-.6h.5l-1.6 8h.9l1-.6.3-1.7c.1.05.3.05.5.05.7 0 1.5-.4 1.8-1h3.8l.1-.1c.25-1.5.15-3.3-.9-4.6zm-1 3.3H13c.05-.4.1-.8.15-1.2h1c.6 0 1.1.2 1.4.7.2.4.3.9.25 1.4zm.35 1.4.1-.05.4-2.2h1c-.2.9-.8 1.7-1.8 2h.65zm-1.6 3.2c-.3-.3-.85-.5-1.5-.5h-1.1c-.1 0-.2.05-.3.05l.2-.9v.9c0 .3-.2.5-.5.5h-.15c-.05.3.25.5.5.5h.9c.4 0 .8-.1 1.1-.4h.9zm6.9-7.5c-.2-.9-.9-1.3-2-1.3h-1.4l.14-.7h.25l.06-.3c.05-.1 0-.2-.28-.2h-1.6c0 .85-.1 1.7-.3 2.5l-.1.6h-1.9l-.3 1.8h1.9c.07-.06.15-.12.15-.24l.35-1.56.1-.6h.5l-1.6 8h1l1-.6.3-1.7c.1.05.3.05.5.05.7 0 1.5-.4 1.8-1h2.6l.4-1.8h-3.3c.1-.1.2-.3.3-.4.15-.2.4-.3.7-.3h1.9c.8 0 1.5-.3 1.8-.9.2-.6.2-1.2 0-1.9zM7.3 16l.6-2.9.1-.5H10.3l.1-.3H7.9l.1-.5H10.5l.1-.3H7.1l-.5-2.7H2.4l-.4 1.9.15 2-.6 2.9c-1.1.2-1.9 1.2-1.9 2.3 0 1 .5 1.6 1 2h-.3l.2 1h1.5l.1-.4h1.6c.7 0 1.4-.4 1.6-1.25l.3-1.15zm-3.6.85h.9l.35-2h.6c.4 0 .8.1 1 .4.2.3.5.3.7.3h.4l-.05.2h.25l.1-.6h-4c0 .03.04.05.04.05 0 0-.1.7-.3 1.65zm1.6-4.5h.05l.3-1.6h.55c.35 0 .7.1 1 .4.2.25.5.2.7.2h.45l-.1.5h.15l.2-1h-1.1c-.5-.4-2-.15-2.2.15zm2.9-1.4v.1l-.1.53.2-1.3h1.1c-.2.3-.3.6-.2 1.1h.2l.15-.4h1.4c.2 0 .4.1.5.3.2.2.4.2.6.2h.75l.1-.6h1.3l-1 5h-3zm4.3-.3 1-5h-.7l-.95 5h-.55l-.9-.1 1.2-2.2c.15-.3.35-.6.5-1l.3-1.2.4-2h-.5z"/></svg>
-                            Pay with PayPal
-                        </button>
-                        <button class="pay__wallet pay__wallet--apple" id="payApple" type="button" aria-label="Pay with Apple Pay">
-                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-                            Apple Pay
-                        </button>
-
-                        <div class="pay__divider"><span>or with card</span></div>
 
                         <button class="btn-glow w-100" id="paySubmit"><span>Pay deposit</span></button>
                         <button class="pay__back" id="payBack" type="button">&larr; Back</button>

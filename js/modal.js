@@ -211,13 +211,8 @@
 
     if (payFinish) payFinish.addEventListener('click', closeModal);
 
-    /* wallet payments (PayPal / Apple Pay) reuse the authorisation flow */
+    /* wallet payments (PayPal / Apple Pay) need no card or contact details */
     const walletPay = (method) => {
-        if (!payName.value.trim() || !payEmail.checkValidity()) {
-            payName.reportValidity();
-            payEmail.reportValidity();
-            return;
-        }
         showStep('spin');
         payTimer = setTimeout(() => showReceipt(method), 1900);
     };
