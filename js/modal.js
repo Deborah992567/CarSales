@@ -49,7 +49,7 @@
     let payTimer = 0;
 
     const showStep = (name) => {
-        Object.entries(paySteps).forEach(([k, el]) => { el.hidden = k !== name; });
+        Object.entries(paySteps).forEach(([k, el]) => { if (el) el.hidden = k !== name; });
         const focusEl = { details: payName, card: payCard, spin: null, done: payFinish, receipt: null }[name];
         if (focusEl) setTimeout(() => focusEl.focus(), 120);
         if (payStatus) {
@@ -160,7 +160,7 @@
     const mediaEl = document.querySelector('.modal-panel__media');
     if (mediaEl) mediaEl.addEventListener('click', (e) => {
         if (e.target.closest('.modal-view-btn')) return;   /* let the view toggle handle its own click */
-        if (!modalPay.hidden && modalConfirm.style.display === 'none') return;
+        if (modalPay && !modalPay.hidden && modalConfirm && modalConfirm.style.display === 'none') return;
         beginCheckout();
     });
 
