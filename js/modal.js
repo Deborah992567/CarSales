@@ -50,7 +50,7 @@
 
     const showStep = (name) => {
         Object.entries(paySteps).forEach(([k, el]) => { el.hidden = k !== name; });
-        const focusEl = { details: payName, card: payCard, spin: null, done: payFinish, receipt: receiptOrderNo }[name];
+        const focusEl = { details: payName, card: payCard, spin: null, done: payFinish, receipt: null }[name];
         if (focusEl) setTimeout(() => focusEl.focus(), 120);
         if (payStatus) {
             if (name === 'spin') payStatus.textContent = 'Authorising reservation…';
@@ -196,7 +196,7 @@
         const lead = document.getElementById('receiptLead');
         if (lead) lead.textContent = total;
         payOrderNo.textContent = ref;
-        if (receiptOrderNo) receiptOrderNo.textContent = ref;
+
         if (rRef) rRef.textContent = ref;
         if (rDate) rDate.textContent = new Date().toLocaleString();
         if (rMethod) rMethod.textContent = method;
