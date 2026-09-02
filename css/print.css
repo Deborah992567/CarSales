@@ -27,7 +27,7 @@
 
     /* print only the receipt on its own page */
     .modal-backdrop{
-        display:block !important; position:static !important; inset:auto !important;
+        display:none !important; position:static !important; inset:auto !important;
         background:#fff !important; padding:0 !important; overflow:visible !important;
     }
     .modal-backdrop.open{ animation:none !important; }
