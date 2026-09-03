@@ -228,7 +228,15 @@
 
     /* receipt actions */
     const receiptPrint = document.getElementById('receiptPrint');
-    if (receiptPrint) receiptPrint.addEventListener('click', () => window.print());
+    if (receiptPrint) receiptPrint.addEventListener('click', () => {
+        document.body.classList.add('print-receipt');
+        const afterPrint = () => {
+            document.body.classList.remove('print-receipt');
+            window.removeEventListener('afterprint', afterPrint);
+        };
+        window.addEventListener('afterprint', afterPrint);
+        window.print();
+    });
     const receiptBack = document.getElementById('receiptBack');
     if (receiptBack) receiptBack.addEventListener('click', () => showStep('details'));
 
