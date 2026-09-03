@@ -229,13 +229,17 @@
     /* receipt actions */
     const receiptPrint = document.getElementById('receiptPrint');
     if (receiptPrint) receiptPrint.addEventListener('click', () => {
+        const receiptStep = document.getElementById('payStepReceipt');
+        if (receiptStep) receiptStep.removeAttribute('hidden');
         document.body.classList.add('print-receipt');
-        const afterPrint = () => {
-            document.body.classList.remove('print-receipt');
-            window.removeEventListener('afterprint', afterPrint);
-        };
-        window.addEventListener('afterprint', afterPrint);
-        window.print();
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                window.print();
+                document.body.classList.remove('print-receipt');
+                if (receiptStep) receiptStep.hidden = true;
+                showStep('receipt');
+            });
+        });
     });
     const receiptBack = document.getElementById('receiptBack');
     if (receiptBack) receiptBack.addEventListener('click', () => showStep('details'));
