@@ -8,7 +8,7 @@
     }
     .preloader, .scroll-progress,
     .navbar-custom, .hero, .marquee, .cta, .footer__social,
-    #scene, #ctaScene, .btn-icon, .btn-buy, .modal-backdrop{
+    #scene, #ctaScene, .btn-icon, .btn-buy{
         display:none !important;
     }
     .reveal, .col-card{ opacity:1 !important; transform:none !important; }
@@ -27,8 +27,9 @@
 
     /* print only the receipt on its own page */
     .modal-backdrop{
-        display:none !important; position:static !important; inset:auto !important;
-        background:#fff !important; padding:0 !important; overflow:visible !important;
+        position:static !important; inset:auto !important;
+        background:#fff !important; padding:0 !important;
+        overflow:visible !important; border:0 !important;
     }
     .modal-backdrop.open{ animation:none !important; }
     .modal-panel{
