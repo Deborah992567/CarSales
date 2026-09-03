@@ -1,52 +1,48 @@
 /* ============================================================
    Cars NG — print stylesheet (light, ink-friendly)
+   Strategy: hide ALL body children, then show only the receipt.
    ============================================================ */
 @media print {
-    body{
-        background:#fff; color:#111;
-        -webkit-print-color-adjust:exact; print-color-adjust:exact;
-    }
-    .preloader, .scroll-progress,
-    .navbar-custom, .hero, .marquee, .cta, .footer__social,
-    #scene, #ctaScene, .btn-icon, .btn-buy{
-        display:none !important;
-    }
-    .reveal, .col-card{ opacity:1 !important; transform:none !important; }
-    .section{ padding:1.5rem 0 !important; }
-    .hero{ min-height:0; }
-    .hero__title{ font-size:2.6rem; }
-    .car-card{
-        break-inside:avoid; border:1px solid #999; box-shadow:none !important;
-    }
-    .car-card__photo{ display:none; }
-    .car-card__media{ height:auto; background:#fff; }
-    .interior-reveal{ position:static; opacity:1 !important; visibility:visible !important; clip-path:none !important; transform:none !important; }
-    .card-title, .car-card__title{ color:#111; }
-    .spec-bar__track i{ width:var(--w,60%) !important; background:#333; }
-    a[href^="http"]::after{ content:" (" attr(href) ")"; font-size:.7em; color:#555; }
+    /* ── hide every direct child of body ────────────────────── */
+    body > *{ display:none !important; }
 
-    /* print only the receipt on its own page */
+    /* ── unhide only the receipt container ───────────────────── */
     .modal-backdrop{
+        display:block !important;
         position:static !important; inset:auto !important;
         background:#fff !important; padding:0 !important;
         overflow:visible !important; border:0 !important;
+        box-shadow:none !important;
     }
     .modal-backdrop.open{ animation:none !important; }
+
+    /* ── flatten the modal panel ─────────────────────────────── */
     .modal-panel{
-        grid-template-columns:1fr !important; max-width:100% !important;
-        width:100% !important; max-height:none !important; overflow:visible !important;
+        grid-template-columns:1fr !important;
+        max-width:100% !important; width:100% !important;
+        max-height:none !important; overflow:visible !important;
         border:0 !important; box-shadow:none !important;
     }
+
+    /* ── hide everything inside the modal except the receipt ── */
     .modal-panel__media, .modal-panel__view, .modal-panel__tap,
     .modal-panel__steps, .modal-close, .modal-panel__body > h3,
     .modal-panel__price, .modal-panel__body > .btn-glow,
-    .pay__step--details, .pay__step--card, .pay__step--spin, .pay__step--done,
+    .pay__step--details, .pay__step--card, .pay__step--spin,
+    .pay__step--done,
     #payStepReceipt .pay__title, #receiptPrint, #receiptBack{
         display:none !important;
     }
-    .modal-panel__pay{ display:block !important; border:0 !important; margin:0 !important; padding:0 !important; }
+
+    .modal-panel__pay{
+        display:block !important; border:0 !important;
+        margin:0 !important; padding:0 !important;
+    }
     .pay__step--receipt{ display:block !important; }
     .pay__divider{ display:none !important; }
+
+    /* ── receipt ink-friendly styles ──────────────────────────── */
+    body{ background:#fff; color:#111; }
     .receipt{ border:1px solid #999; padding:1.5rem; }
     .receipt__wm{ opacity:.1 !important; }
     .receipt__rows dt{ color:#333 !important; }
